@@ -1,4 +1,4 @@
-package com.Flock.Login.Entity;
+package com.Flock.domain.Member.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,19 +17,27 @@ public class Member {
     @GeneratedValue( strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private Integer phone_number;
+    // 로그인 아이디
+    @Column(nullable = false)
+    private String userName;
 
     @Column(nullable = false)
-    private String name;
+    private String password;
+
+    @Column(nullable = false, unique = true)
+    private Integer phoneNumber;
+
+
+    // 사용자명
+    @Column(nullable = false)
+    private String memberName;
 
 
     @Column(nullable = false)
     private String mail;
 
 
-    @Column(nullable = false)
-    private String password;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;

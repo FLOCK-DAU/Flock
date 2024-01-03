@@ -39,7 +39,7 @@ public class MemberDetail implements UserDetails {
     // ID 정보 제공
     @Override
     public String getUsername() {
-        return member.getMemberName();
+        return member.getLoginId();
     }
     // 계정 만료여부 제공
     // 특별히 사용을 안할시 항상 true를 반환하도록 처리
@@ -57,7 +57,7 @@ public class MemberDetail implements UserDetails {
     // true 처리할시 모든 인증정보를 만료시키지 않기에 주의해야한다.
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
     // 계정의 활성화 여부
     // 딱히 사용안할시 항상 true를 반환하도록 처리

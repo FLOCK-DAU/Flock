@@ -2,6 +2,7 @@ package com.Flock.domain.Member.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Member {
     @Id
     @GeneratedValue( strategy =  GenerationType.IDENTITY)
@@ -19,13 +21,13 @@ public class Member {
 
     // 로그인 아이디
     @Column(nullable = false)
-    private String userName;
+    private String loginId;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, unique = true)
-    private Integer phoneNumber;
+    private String phoneNumber;
 
 
     // 사용자명
@@ -36,8 +38,8 @@ public class Member {
     @Column(nullable = false)
     private String mail;
 
-
-
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

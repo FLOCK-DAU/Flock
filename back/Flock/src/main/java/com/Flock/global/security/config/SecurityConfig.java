@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -21,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomMemberDetailSerivce customMemberDetailSerivce;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * Spring Security의 앞단 설정을 할수 있다.
@@ -43,6 +45,34 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+//        log.info("필터체인 진입");
+//        http
+//                .csrf((csrf) -> csrf.disable())
+//                .authorizeHttpRequests((authorizeHttpRequests) ->
+//                        authorizeHttpRequests
+//                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/login").permitAll()
+//                                .anyRequest().authenticated()
+//                )
+//                .formLogin((formLogin) -> {
+//                    formLogin
+//                            .loginPage("/login")
+//                            .loginProcessingUrl("/login")
+//                            .usernameParameter("loginId")
+//                            .passwordParameter("password")
+//                            .defaultSuccessUrl("/main")
+//                            .permitAll();
+//                });
+//
+//        // admin은 모든 접근에 대해 허락하고
+//        // 게스트는 특정 url만 허락할 필요있음 : ex ) 검색, ...
+//
+//        return http.build();
+//    }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info("필터체인 진입");
@@ -51,18 +81,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/**").permitAll()
-                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/api/sign-in").permitAll()
+                                .requestMatchers("/api/sign-up").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin((formLogin) -> {
-                    formLogin
-                            .loginPage("/login")
-                            .loginProcessingUrl("/login")
-                            .usernameParameter("loginId")
-                            .passwordParameter("password")
-                            .defaultSuccessUrl("/main")
-                            .permitAll();
-                });
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         // admin은 모든 접근에 대해 허락하고
         // 게스트는 특정 url만 허락할 필요있음 : ex ) 검색, ...

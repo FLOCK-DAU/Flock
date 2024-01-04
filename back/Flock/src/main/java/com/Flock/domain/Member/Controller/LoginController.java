@@ -4,6 +4,11 @@ import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Member.Entity.Role;
 import com.Flock.domain.Member.Repository.MemberRepository;
+import com.Flock.domain.Member.Service.MemberService;
+import com.Flock.domain.Member.dto.SignInRequestDto;
+import com.Flock.domain.Member.dto.SignUpRequestDto;
+import com.Flock.domain.Response.CommonResponse;
+import com.Flock.domain.Response.ResponseService;
 import com.Flock.domain.Response.SingleResponse;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
@@ -12,22 +17,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class LoginController {
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    @PostMapping("/api/sign-in")
+    public SingleResponse signIn(@RequestBody SignInRequestDto sign){
+        SingleResponse singleResponse = memberService.signIn(sign.getLoginId(), sign.getPassword());
 
-    @GetMapping("/login")
-    public String login(){
-        return "/login";
+        return singleResponse;
     }
+
+    @PostMapping("/api/sign-up")
+    public CommonResponse signUp(@RequestBody SignUpRequestDto signUpRequestDto){
+        CommonResponse response = memberService.signUp(signUpRequestDto);
+        return response;
+    }
+
+
 
 
     /**
@@ -51,12 +62,6 @@ public class LoginController {
 //    }
 
 
-    @GetMapping("/test")
-    @ResponseBody
-    public ResponseEntity<?> test(@AuthenticationPrincipal MemberDetail memberDetail){
-        String loginId = memberDetail.getUsername();
 
-        return ResponseEntity.ok(loginId);
-    }
 
 }

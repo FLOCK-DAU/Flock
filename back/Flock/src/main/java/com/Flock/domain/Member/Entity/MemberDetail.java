@@ -1,8 +1,10 @@
 package com.Flock.domain.Member.Entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -15,9 +17,9 @@ public class MemberDetail implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 특별한 권한 시스템을 사용하지 않을경우
-        // 를 사용하면 된다.
-        return Collections.EMPTY_LIST;
+        ArrayList<GrantedAuthority> auth = new ArrayList<>();
+        auth.add(new SimpleGrantedAuthority(this.member.getRole().toString()));
+        return auth;
 
 //        ArrayList<GrantedAuthority> auths = new ArrayList<>();
 //        for(String role : member.getHasRole()){

@@ -10,7 +10,7 @@ public class ResponseService {
     public <T> SingleResponse<T> getSingleResponse(T data) {
         SingleResponse singleResponse = new SingleResponse();
         singleResponse.data = data;
-        setSuccessResponse(singleResponse);
+        singleResponse.setSuccessResponse();
 
         return singleResponse;
     }
@@ -18,15 +18,10 @@ public class ResponseService {
     public <T> ListResponse<T> getListResponse(List<T> datalist) {
         ListResponse listResponse = new ListResponse();
         listResponse.datalist = datalist;
-        setSuccessResponse(listResponse);
-
+        listResponse.setSuccessResponse();
         return listResponse;
     }
 
 
-    private void setSuccessResponse(CommonResponse response) {
-        response.code = 0;
-        response.success = true;
-        response.message = "SUCCESS";
-    }
+
 }

@@ -1,10 +1,12 @@
 package com.Flock.global.security.config;
 
+import com.Flock.domain.Member.Entity.Role;
 import com.Flock.global.security.service.CustomMemberDetailSerivce;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -80,9 +82,10 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/api/sign-in").permitAll()
                                 .requestMatchers("/api/sign-up").permitAll()
+                                .requestMatchers("/api/category").hasAuthority(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

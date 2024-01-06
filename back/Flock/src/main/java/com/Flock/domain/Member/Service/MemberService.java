@@ -9,12 +9,14 @@ import com.Flock.domain.Response.ResponseService;
 import com.Flock.domain.Response.SingleResponse;
 import com.Flock.global.security.config.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -74,6 +76,7 @@ public class MemberService {
 
         String token = jwtTokenProvider.createToken(member.get().getLoginId(), member.get().getRole());
 
+        log.info(member.get().getRole().toString());
         return responseService.getSingleResponse(token);
     }
 

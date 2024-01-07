@@ -30,7 +30,8 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey = "secretKey";
 
-    private final long tokenValidMilliSecond = 1000L * 60 *60;
+//    private final long tokenValidMilliSecond = 1000L * 60 *60;
+    private final long tokenValidMilliSecond = 5184000000L; // 2개월 기간
 
     @PostConstruct
     protected void init(){
@@ -76,7 +77,16 @@ public class JwtTokenProvider {
      * 클라이언트가 헤더를 통해 어플리케이션 서버로 JWT 토큰 값을 전달해야 됨!
      */
     public String resolveToken(HttpServletRequest request){
-        return request.getHeader("X-AUTH-TOKEN");
+
+        String header = request.getHeader("Authorization");
+
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7); // 'Bearer ' 이후의 토큰 부분 추출
+            // 토큰 검증 및 파싱 로직 수행
+            return token;
+        }
+
+        return "";
     }
 
     /**

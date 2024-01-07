@@ -83,9 +83,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
 //                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**","/swagger-resources/**","/swagger-ui/**","/api-docs/**").permitAll()
                                 .requestMatchers("/api/sign-in").permitAll()
                                 .requestMatchers("/api/sign-up").permitAll()
-                                .requestMatchers("/api/category").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST,"/api/category").hasAuthority(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
@@ -95,5 +96,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 
 }

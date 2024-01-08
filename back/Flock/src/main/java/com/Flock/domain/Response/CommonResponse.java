@@ -14,6 +14,12 @@ public class CommonResponse {
         message = "SUCCESS";
     }
 
+    public void setFailResponse(String msg){
+        code = 1;
+        success = false;
+        message = msg;
+    }
+
     public void setMessage(String msg){
         this.message = msg;
     }

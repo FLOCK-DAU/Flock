@@ -89,7 +89,13 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/api/category").hasAuthority(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
+                // AccessDeniedHandler :  권한을 확인하는 과정에서 통과하지 못하는 예외가 발생할 경우 예외를 전달
+                // AuthenticationEntryPoint : 인증과정에서 예외가 발생할 경웅 예외를 전달
+                .exceptionHandling((exceptionHandling) ->
+                        exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()).accessDeniedHandler(new CustomAccessDeniedHandler())
+                )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
 
         // admin은 모든 접근에 대해 허락하고
         // 게스트는 특정 url만 허락할 필요있음 : ex ) 검색, ...

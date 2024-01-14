@@ -86,7 +86,7 @@ public class SecurityConfig {
                                 .requestMatchers("/v3/api-docs/**","/swagger-resources/**","/swagger-ui/**","/api-docs/**").permitAll()
                                 .requestMatchers("/api/sign-in").permitAll()
                                 .requestMatchers("/api/sign-up").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/api/category").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers("/api/category").hasAuthority(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
                 // AccessDeniedHandler :  권한을 확인하는 과정에서 통과하지 못하는 예외가 발생할 경우 예외를 전달

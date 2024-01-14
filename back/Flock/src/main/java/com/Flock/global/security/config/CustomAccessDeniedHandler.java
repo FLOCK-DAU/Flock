@@ -17,6 +17,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
+    /**
+     * 로그인을 했으나 권한이 없는 사람이 접근할 때
+     */
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -26,7 +30,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(APPLICATION_JSON_VALUE);
         CommonResponse commonResponse = new CommonResponse();
-        commonResponse.setFailResponse("접근이 금지되었습니다.");
+        commonResponse.setFailResponse("적절한 권한을 가진 사용자가 아닙니다.");
         response.getWriter().write(objectMapper.writeValueAsString(commonResponse));
 
         response.getWriter().flush();

@@ -30,6 +30,7 @@ public class CustomMemberDetailSerivce implements UserDetailsService {
         if (!member.isPresent()){
             throw new UsernameNotFoundException("계정을 찾을 수 없습니다.");
         }
+        log.info(member.get().getRole().name());
         return new MemberDetail(member.get());
     }
 

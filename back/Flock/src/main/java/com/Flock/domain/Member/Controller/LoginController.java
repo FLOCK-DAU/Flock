@@ -1,5 +1,6 @@
 package com.Flock.domain.Member.Controller;
 
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Member.Entity.Role;
@@ -13,6 +14,7 @@ import com.Flock.domain.Response.SingleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Tag(name = "로그인 컨트롤러",description = "로그인, 회원가입")
 @RestController
 public class LoginController {
+
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     MemberService memberService;
@@ -53,16 +61,19 @@ public class LoginController {
 //    @GetMapping("/make-admin")
 //    @ResponseBody
 //    public ResponseEntity<?> addAdmin(){
+//
 //        Member member = Member.builder()
-//                .userName("admin")
+//                .loginId("a")
 //                .password(encoder.encode("1234"))
 //                .phoneNumber("01064228462")
-//                .memberName("admin")
-//                .mail("ewqeqwewqe")
-//                .role(Role.ADMIN)
+//                .memberName("채승지")
+//                .gender(Gender.MALE)
+//                .mail("1924245@donga.ac.kr")
+//                .role(Role.USER)
 //                .build();
 //
 //        memberRepository.save(member);
+//
 //        return ResponseEntity.ok(member);
 //
 //    }

@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/flock
-    username: root
-    password: 1234
+    url: jdbc:mysql://${DB_ENDPOINT}:${DB_PORT}/${DB_SCHEMA}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   servlet:
     multipart:
       max-file-size: 30MB
@@ -15,9 +15,16 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   mvc:
     async:
       request-timeout: -1
 
 jwt:
     secret: flature!@#
+
+logging:
+  level:
+    root: debug

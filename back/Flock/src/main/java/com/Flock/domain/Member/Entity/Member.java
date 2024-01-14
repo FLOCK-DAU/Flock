@@ -1,5 +1,6 @@
 package com.Flock.domain.Member.Entity;
 
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,12 +35,14 @@ public class Member {
     @Column(nullable = false)
     private String memberName;
 
-
     @Column(nullable = false)
     private String mail;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

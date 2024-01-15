@@ -25,6 +25,6 @@ spring:
 jwt:
     secret: flature!@#
 
-logging:
-  level:
-    root: debug
+#logging:
+#  level:
+#    root: debug

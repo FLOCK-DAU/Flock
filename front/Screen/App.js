@@ -5,6 +5,7 @@ import Start from "../Screen/Sign/Start";
 import Signin from "../Screen/Sign/Signin";
 import Signup from "../Screen/Sign/Signup";
 import FindAccount from './Sign/FindAccount';
+import PhoneNumberVerification from './Sign/PhoneNumberVerification';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +19,7 @@ export default function App() {
         <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
         <Stack.Screen name="FindAccount" component={FindAccount} options={{ headerShown: false }} />
-    
+        <Stack.Screen name="PhoneNumberVerification" component={PhoneNumberVerification} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

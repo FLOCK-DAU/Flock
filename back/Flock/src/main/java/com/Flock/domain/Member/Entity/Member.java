@@ -1,5 +1,6 @@
 package com.Flock.domain.Member.Entity;
 
+import com.Flock.domain.Club.Entity.Club;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 public class Member {
     @Id
     @GeneratedValue( strategy =  GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     // 로그인 아이디
@@ -48,6 +51,9 @@ public class Member {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Club> clubs;
 
 
 }

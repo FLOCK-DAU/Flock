@@ -1,4 +1,4 @@
-package com.Flock.domain.Member.dto;
+package com.Flock.domain.Member.DTO;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.Flock.domain.Category.dto;
+package com.Flock.domain.Category.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

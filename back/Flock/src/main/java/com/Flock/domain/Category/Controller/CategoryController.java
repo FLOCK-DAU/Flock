@@ -1,7 +1,7 @@
 package com.Flock.domain.Category.Controller;
 
 import com.Flock.domain.Category.Service.CategoryService;
-import com.Flock.domain.Category.dto.CategoryRequestDto;
+import com.Flock.domain.Category.DTO.CategoryRequestDto;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;

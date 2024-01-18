@@ -3,7 +3,7 @@ package com.Flock.domain.Member.Service;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Entity.Role;
 import com.Flock.domain.Member.Repository.MemberRepository;
-import com.Flock.domain.Member.dto.SignUpRequestDto;
+import com.Flock.domain.Member.DTO.SignUpRequestDto;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ResponseService;
 import com.Flock.domain.Response.SingleResponse;

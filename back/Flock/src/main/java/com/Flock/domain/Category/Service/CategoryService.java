@@ -2,7 +2,7 @@ package com.Flock.domain.Category.Service;
 
 import com.Flock.domain.Category.Entity.Category;
 import com.Flock.domain.Category.Repository.CategoryRepository;
-import com.Flock.domain.Category.dto.CategoryRequestDto;
+import com.Flock.domain.Category.DTO.CategoryRequestDto;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ListResponse;
 import com.Flock.domain.Response.ResponseService;

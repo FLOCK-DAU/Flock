@@ -30,16 +30,16 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
+//    @Column(nullable = false, unique = true)
+//    private String phoneNumber;
 
 
     // 사용자명
     @Column(nullable = false)
     private String memberName;
 
-    @Column(nullable = false)
-    private String mail;
+//    @Column(nullable = false)
+//    private String mail;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;

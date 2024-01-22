@@ -1,6 +1,9 @@
 package com.Flock.domain.Member.Service;
 
+import com.Flock.domain.Member.DTO.MemberDto;
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
+import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Member.Entity.Role;
 import com.Flock.domain.Member.Repository.MemberRepository;
 import com.Flock.domain.Member.DTO.SignUpRequestDto;
@@ -13,10 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @Slf4j
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -49,10 +56,11 @@ public class MemberService {
         Member member = Member.builder()
                 .loginId(signUpRequestDto.getLoginId())
                 .password(encoder.encode(signUpRequestDto.getPassword()))
-                .phoneNumber(signUpRequestDto.getPhoneNumber())
+//                .phoneNumber(signUpRequestDto.getPhoneNumber())
                 .memberName(signUpRequestDto.getMemberName())
                 .mail(signUpRequestDto.getMail())
                 .role(Role.USER)
+                .gender(Gender.valueOf(signUpRequestDto.getGender()))
                 .build();
 
         memberRepository.save(member);
@@ -67,17 +75,44 @@ public class MemberService {
     /**
      * 로그인
      */
-    public SingleResponse signIn(String loginId, String password) {
-        Optional<Member> member = memberRepository.findByUserName(loginId);
+    public SingleResponse signIn(String email, String password) {
+        Optional<Member> member = memberRepository.findByUserName(email);
 
         if (!encoder.matches(password, member.get().getPassword())) {
             throw new RuntimeException(); // 나중에 커스터마이징 하기
         }
 
-        String token = jwtTokenProvider.createToken(member.get().getLoginId(), member.get().getRole());
+        String token = jwtTokenProvider.createToken(member.get().getMail(), member.get().getRole());
 
         log.info(member.get().getRole().toString());
         return responseService.getSingleResponse(token);
     }
 
+    public Optional<MemberDto> searchMember(String loginId){
+        return memberRepository.findByUserName(loginId).map(MemberDto::from);
+    }
+
+    public Optional<MemberDto> searchMemberByMail(String mail){
+        return memberRepository.findByMail(mail).map(MemberDto::from);
+    }
+
+
+    /**
+     * 카카오유저 회원가입에서 카카오에서 받은 정보로 일단 디비에 올리기
+     */
+    public MemberDto saveMember(String loginId, String password, String memberName, String mail) {
+
+        Member member = Member.builder()
+                .loginId(loginId)
+                .password(encoder.encode(password))
+                .memberName(memberName)
+                .mail(mail)
+                .role(Role.USER)
+                .build();
+
+        return MemberDto.from(
+                memberRepository.save(member)
+        );
+
+    }
 }

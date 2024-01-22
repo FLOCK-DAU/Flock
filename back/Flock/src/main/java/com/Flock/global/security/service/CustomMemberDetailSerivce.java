@@ -1,5 +1,6 @@
 package com.Flock.global.security.service;
 
+import com.Flock.domain.Member.DTO.MemberDto;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Member.Repository.MemberRepository;
@@ -26,12 +27,12 @@ public class CustomMemberDetailSerivce implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
       log.info("시큐리티 서비스 진입");
-        Optional<Member> member = memberRepository.findByUserName(username);
+        Optional<Member> member = memberRepository.findByMail(username);
         if (!member.isPresent()){
             throw new UsernameNotFoundException("계정을 찾을 수 없습니다.");
         }
         log.info(member.get().getRole().name());
-        return new MemberDetail(member.get());
+        return new MemberDetail(MemberDto.from(member.get()));
     }
 
 

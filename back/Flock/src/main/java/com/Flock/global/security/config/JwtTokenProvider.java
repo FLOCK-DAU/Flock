@@ -38,8 +38,8 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String userId, Role role){
-        Claims claims = Jwts.claims().setSubject(userId);
+    public String createToken(String email, Role role){
+        Claims claims = Jwts.claims().setSubject(email);
         claims.put("role",role);
 
         Date now = new Date();

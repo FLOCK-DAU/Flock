@@ -17,4 +17,6 @@ public class SignUpRequestDto {
     String memberName;
 
     String mail;
+
+    String gender;
 }

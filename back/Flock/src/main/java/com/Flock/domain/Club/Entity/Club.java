@@ -50,6 +50,9 @@ public class Club {
     private Member manager;
 
 
+    @OneToMany(mappedBy = "club")
+    private List<ClubMember> clubMembers;
+
     /**
      *  이 모임의 활동 요일 반환
      */

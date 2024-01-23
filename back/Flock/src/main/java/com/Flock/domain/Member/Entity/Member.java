@@ -1,6 +1,7 @@
 package com.Flock.domain.Member.Entity;
 
 import com.Flock.domain.Club.Entity.Club;
+import com.Flock.domain.Club.Entity.ClubMember;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,15 +31,15 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
+//    @Column(nullable = false, unique = true)
+//    private String phoneNumber;
 
 
     // 사용자명
-    @Column(nullable = false)
+
     private String memberName;
 
-    @Column(nullable = false)
+
     private String mail;
 
     @Enumerated(value = EnumType.STRING)
@@ -52,8 +53,8 @@ public class Member {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Club> clubs;
+    @OneToMany(mappedBy = "member")
+    private List<ClubMember> clubMembers;
 
 
 }

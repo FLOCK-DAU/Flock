@@ -23,7 +23,11 @@ public class Club {
     @Column(name = "club_id")
     private Long id;
 
+    // 모임 제목
     private String title;
+
+    // 소개글
+    private String introduce;
 
     // 최대 인원수 제한
     private Integer maximum;
@@ -40,15 +44,24 @@ public class Club {
     // 활동 주기 (1주 or 격주 ....)
     private Integer activityFrequency;
 
+    // 공개/ 비공개
+    private Boolean secret;
 
+
+
+    // 만들어진 시간
     @CreationTimestamp
     private LocalDateTime createdAt;
 
 
+    // 방장
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member manager;
 
+
+    @OneToMany(mappedBy = "club")
+    private List<ClubMember> clubMembers;
 
     /**
      *  이 모임의 활동 요일 반환

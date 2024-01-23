@@ -4,17 +4,17 @@ import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const BackButtonHeaderLeft = () => {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  const handlePress = () => {
-    navigation.goBack();
-  };
+    const handlePress = () => {
+        navigation.goBack();
+    };
 
-  return (
-    <TouchableOpacity onPress={handlePress}>
-      <AntDesign name="left" size={20} color="black" />
-    </TouchableOpacity>
-  );
+    return (
+        <TouchableOpacity onPress={handlePress}>
+            <AntDesign name="left" size={20} color="black" />
+        </TouchableOpacity>
+    );
 };
 
 export default BackButtonHeaderLeft;

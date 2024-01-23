@@ -97,10 +97,10 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests
-                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").permitAll()
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resource의 static폴더 내부 허용
-                                        .requestMatchers("/v3/api-docs/**","/swagger-resources/**","/swagger-ui/**","/api-docs/**").permitAll()
-                                        .requestMatchers("/api/sign-in", "/test-login").permitAll()
+                                        .requestMatchers("/v3/api-docs/**","/swagger-resources/**","/swagger-ui/**","/api-docs/**","/static/**").permitAll()
+                                        .requestMatchers("/api/sign-in", "/test-login","/login/**").permitAll()
                                         .requestMatchers("/api/sign-up").permitAll()
                                         .requestMatchers(HttpMethod.POST,"/api/category").hasAuthority(Role.ADMIN.name())
                                         .anyRequest().authenticated()
@@ -110,11 +110,11 @@ public class SecurityConfig {
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()).accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
-                .oauth2Login(oAuth ->
-                        oAuth.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2Service))
-                        .failureHandler(customAuthenticationFailureHandler)
-                        .successHandler(customAuthenticationSuccessHandler)
-                )
+//                .oauth2Login(oAuth ->
+//                        oAuth.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2Service))
+//                        .failureHandler(customAuthenticationFailureHandler)
+//                        .successHandler(customAuthenticationSuccessHandler)
+//                )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 ;
 

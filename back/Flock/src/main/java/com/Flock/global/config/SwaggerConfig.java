@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 @OpenAPIDefinition(
         info = @Info(title = "User-Service API 명세서",
-                description = "admin : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNDYyODA0MSwiZXhwIjoxNzA5ODEyMDQxfQ.Hsuc1CdEReJLQpS0mQmSQyz3Sgr6ysh5S0BhA2QYxXo \n\n\n\n\n\n" +
+                description = "admin : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb3JlYTY0NzhAbmF2ZXIuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzA2MDIxMjUwLCJleHAiOjE3MTEyMDUyNTB9.fbPw4V-G-7fXz7woX1J_yBO975wMfkF_UlsebNDTMPU \n\n\n\n\n\n" +
                         "user : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDUyMzM3NTAsImV4cCI6MTcxMDQxNzc1MH0.q1egPPbKO9kjjq8VOLtPt-Rim1PlxXyekXI5gUAwQ48 ",
                 version = "v1"
         )

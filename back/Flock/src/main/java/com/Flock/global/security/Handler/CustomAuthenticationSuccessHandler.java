@@ -11,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 
 @Slf4j
@@ -36,6 +38,25 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             String token = tokenProvider.createToken(email, Role.valueOf(role));
             log.info(token);
 
+            // http://localhost:8080/oauth2/authorization/kakao
+
+            //
+
+            // jwt 토큰을 담아서 리스폰스.
+
+
+
+             // accessToken을 쿼리스트링에 담는 url을 만들어준다.
+           String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/loginSuccess")
+                    .queryParam("accessToken", token)
+                    .build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString();
+           log.info("redirect 준비");
+           // 로그인 확인 페이지로 리다이렉트 시킨다.
+           getRedirectStrategy().sendRedirect(request, response, targetUrl);
+
+
         }
         // 회원이 없으면 데이터베이스에 등록하고 jwt토큰 발행하고 로그인 인증 처리 시키기
         else {
@@ -44,4 +65,5 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         super.onAuthenticationSuccess(request, response, authentication);
     }
+
 }

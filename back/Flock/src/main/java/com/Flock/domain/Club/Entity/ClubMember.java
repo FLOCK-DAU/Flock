@@ -22,4 +22,8 @@ public class ClubMember {
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
+
+
+    // 클럽 멤버인 사람 / 가입 신청 중인 사람
+    private Boolean isMember;
 }

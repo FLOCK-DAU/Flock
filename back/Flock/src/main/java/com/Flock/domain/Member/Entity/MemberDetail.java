@@ -12,19 +12,19 @@ import java.util.Map;
 
 public class MemberDetail implements UserDetails, OAuth2User {
 
-    private MemberDto memberDto;
+    private MemberDto member;
 
     private Map<String,Object> oAuth2Attribute;
 
-    public MemberDetail(MemberDto memberDto){
-        this.memberDto = memberDto;
+    public MemberDetail(MemberDto member){
+        this.member = member;
         this.oAuth2Attribute = Map.of();
     }
 
 
     // oAuth 인증할 때 사용
-    public MemberDetail(MemberDto memberDto,Map<String,Object> oAuth2Attribute){
-        this.memberDto = memberDto;
+    public MemberDetail(MemberDto member, Map<String,Object> oAuth2Attribute){
+        this.member = member;
         this.oAuth2Attribute = oAuth2Attribute;
     }
 
@@ -34,7 +34,7 @@ public class MemberDetail implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> auth = new ArrayList<>();
-        auth.add(new SimpleGrantedAuthority(this.memberDto.getRole().toString()));
+        auth.add(new SimpleGrantedAuthority(this.member.getRole().toString()));
         return auth;
 
 //        ArrayList<GrantedAuthority> auths = new ArrayList<>();
@@ -52,12 +52,12 @@ public class MemberDetail implements UserDetails, OAuth2User {
     // 비밀번호 정보 제공
     @Override
     public String getPassword() {
-        return memberDto.getPassword();
+        return member.getPassword();
     }
     // ID 정보 제공
     @Override
     public String getUsername() {
-        return memberDto.getLoginId();
+        return member.getLoginId();
     }
     // 계정 만료여부 제공
     // 특별히 사용을 안할시 항상 true를 반환하도록 처리
@@ -89,7 +89,7 @@ public class MemberDetail implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return memberDto.getLoginId();
+        return member.getMail();
     }
 
     /**
@@ -102,5 +102,9 @@ public class MemberDetail implements UserDetails, OAuth2User {
 
     public static MemberDetail from(MemberDto memberDto) {
         return new MemberDetail(memberDto);
+    }
+
+    public MemberDto getMember(){
+        return member;
     }
 }

@@ -84,7 +84,6 @@ public class MemberService {
 
         String token = jwtTokenProvider.createToken(member.get().getMail(), member.get().getRole());
 
-        log.info(member.get().getRole().toString());
         return responseService.getSingleResponse(token);
     }
 

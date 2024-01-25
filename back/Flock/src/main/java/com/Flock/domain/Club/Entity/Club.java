@@ -47,11 +47,19 @@ public class Club {
     // 공개/ 비공개
     private Boolean secret;
 
+    // 모집 중/ 모집 안 함
+    private Boolean isRecruitment;
+
+    // 생각해보니 클럽 공지도 있음.
+
+    // 혼성 모임인지 아닌지
+    private Boolean isMixed;
 
 
     // 만들어진 시간
     @CreationTimestamp
     private LocalDateTime createdAt;
+
 
 
     // 방장
@@ -60,8 +68,11 @@ public class Club {
     private Member manager;
 
 
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
     private List<ClubMember> clubMembers;
+
+    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
+    private List<ClubTag> clubTags;
 
     /**
      *  이 모임의 활동 요일 반환
@@ -73,15 +84,5 @@ public class Club {
         return days;
     }
 
-    /**
-     * 모임의 활동 요일 설정
-     */
-    public void setActivityDays(List<DayOfWeek> days) {
-        String activityDays = days.stream()
-                .map(DayOfWeek::name)
-                .collect(Collectors.joining(","));
 
-        // 이 부분에서 activityDays를 엔티티의 필드에 할당합니다.
-        this.activityDays = activityDays;
-    }
 }

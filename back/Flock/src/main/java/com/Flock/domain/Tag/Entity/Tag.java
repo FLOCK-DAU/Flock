@@ -1,7 +1,10 @@
-package com.Flock.domain.Club.Entity;
+package com.Flock.domain.Tag.Entity;
 
+import com.Flock.domain.Club.Entity.ClubTag;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,6 +18,8 @@ public class Tag {
     @Column(name = "tag_id")
     private Long id;
 
+    @Column(unique = true,nullable = false)
     private String tagName;
+
 
 }

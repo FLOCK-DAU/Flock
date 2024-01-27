@@ -1,6 +1,7 @@
 package com.Flock.domain.Club.Entity;
 
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,7 +54,8 @@ public class Club {
     // 생각해보니 클럽 공지도 있음.
 
     // 혼성 모임인지 아닌지
-    private Boolean isMixed;
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
 
 
     // 만들어진 시간

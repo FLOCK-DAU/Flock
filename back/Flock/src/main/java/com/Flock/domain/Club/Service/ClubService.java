@@ -1,40 +1,64 @@
 package com.Flock.domain.Club.Service;
 
-import com.Flock.domain.Club.DTO.ClubRequestDto;
+import com.Flock.domain.Club.DTO.ClubListDto;
+import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
+import com.Flock.domain.Club.DTO.Response.ClubResponseDto;
 import com.Flock.domain.Club.Entity.Club;
+import com.Flock.domain.Club.Entity.ClubTag;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.Club.Repository.ClubRepository;
+import com.Flock.domain.Club.Repository.ClubTagRepository;
+import com.Flock.domain.Likes.Service.LikesService;
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Repository.MemberRepository;
+import com.Flock.domain.Member.Service.MemberService;
 import com.Flock.domain.Response.CommonResponse;
-import com.Flock.domain.Response.ResponseService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ClubService {
 
-    @Autowired
-    MemberRepository memberRepository;
 
-    @Autowired
-    ClubRepository clubRepository;
+    private final MemberService memberService;
 
 
+    private final ClubRepository clubRepository;
+
+
+    private final ClubTagService clubTagService;
+
+    private final LikesService likesService;
+
+    private final ClubMemberService clubMemberService;
+
+
+    /**
+     * 쿨럽 생성
+     */
     public CommonResponse createClub(ClubRequestDto clubRequestDto, Long memberId){
 
-        Optional<Member> member = memberRepository.findById(memberId);
+        Optional<Member> member = memberService.findById(memberId);
 
         List<DayOfWeek> dayOfWeeks = DayOfWeek.from(clubRequestDto.getActivityDays());
+
+        Gender gender = Gender.fromDescription(clubRequestDto.getGender());
+
+        if(!gender.equals(Gender.MIXED)) gender = member.get().getGender();
 
         Club club = Club.builder()
                 .title(clubRequestDto.getTitle())
@@ -45,10 +69,14 @@ public class ClubService {
                 .activityFrequency(clubRequestDto.getActivityFrequency())
                 .secret(clubRequestDto.getSecret())
                 .isRecruitment(true)
+                .gender(gender)
                 .manager(member.get()).build();
 
 
         clubRepository.save(club);
+
+        clubTagService.saveClubTag(club,clubRequestDto.getTags());
+
 
         return new CommonResponse(member.get().getMemberName() + "이 만든 클럽은 성공적으로 저장됨");
 
@@ -56,8 +84,33 @@ public class ClubService {
 
 
 
+    /**
+     * 클럽 리스트 조회
+     * 검색 조건이 있을텐데 나중에 추가해주기
+     */
+    public List<ClubListDto> getClubs(){
+        List<Club> clubs = clubRepository.findAll();
+
+        return clubs.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    private ClubListDto convertToDto(Club club){
+        List<String> tagNames = clubTagService.findByClub(club)
+                .stream()
+                .map(clubTag -> clubTag.getTag().getTagName())
+                .collect(Collectors.toList());
+
+        Integer clubLikesCount = likesService.getLikesCount(club.getId());
+
+        Integer clubMemberCount = clubMemberService.countClubMember(club);
+
+        return new ClubListDto(club,tagNames,clubLikesCount,clubMemberCount);
+    }
 
 
+    /**
+     * 활동 주기와 활동 요일을 통해 활동일자 계산
+     */
 
     public LocalDateTime calculateNextActivityDate(LocalDateTime startDate, List<DayOfWeek> activityDays, int activityFrequency) {
         LocalDateTime nextActivityDate = null;

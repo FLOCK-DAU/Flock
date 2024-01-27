@@ -1,13 +1,12 @@
 package com.Flock.domain.Club.Controller;
 
-import com.Flock.domain.Club.DTO.ClubRequestDto;
+import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
 import com.Flock.domain.Club.Service.ClubService;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ListResponse;
 import com.Flock.domain.Response.ResponseService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class ClubController {
      */
     @GetMapping("/api/clubs")
     public ListResponse getClubs(@RequestParam(required = false, value = "title")String title){
-        return responseService.getListResponse(new ArrayList<>());
+        return responseService.getListResponse(clubService.getClubs());
 
     }
 

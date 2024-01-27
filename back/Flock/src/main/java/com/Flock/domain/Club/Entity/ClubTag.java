@@ -1,5 +1,6 @@
 package com.Flock.domain.Club.Entity;
 
+import com.Flock.domain.Tag.Entity.Tag;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,11 +16,11 @@ public class ClubTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
 }

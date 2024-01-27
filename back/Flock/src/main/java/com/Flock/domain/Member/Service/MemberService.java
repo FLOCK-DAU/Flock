@@ -40,6 +40,8 @@ public class MemberService {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 
+
+
     /**
      * 회원가입
      */
@@ -113,5 +115,9 @@ public class MemberService {
                 memberRepository.save(member)
         );
 
+    }
+
+    public Optional<Member> findById(Long id){
+        return memberRepository.findById(id);
     }
 }

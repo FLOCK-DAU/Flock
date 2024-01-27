@@ -1,4 +1,4 @@
-package com.Flock.domain.Club.DTO;
+package com.Flock.domain.Club.DTO.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +26,9 @@ public class ClubRequestDto {
     Boolean secret;
 
     Boolean isRecruitment;
+
+    String gender;
+
+    List<String> Tags;
 
 }

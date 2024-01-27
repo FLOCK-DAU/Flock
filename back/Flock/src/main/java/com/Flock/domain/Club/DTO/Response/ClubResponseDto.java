@@ -1,8 +1,9 @@
-package com.Flock.domain.Club.DTO;
+package com.Flock.domain.Club.DTO.Response;
 
 
 import com.Flock.domain.Club.Entity.ClubMember;
 import com.Flock.domain.Club.Entity.ClubTag;
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,8 @@ public class ClubResponseDto {
     Boolean secret;
 
     Boolean isRecruitment;
+
+    Gender gender;
 
     LocalDateTime createdAt;
 

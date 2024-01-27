@@ -29,6 +29,8 @@ public class ClubRequestDto {
 
     String gender;
 
+    Integer categoryId;
+
     List<String> Tags;
 
 }

@@ -1,5 +1,6 @@
 package com.Flock.domain.Club.Entity;
 
+import com.Flock.domain.Category.Entity.Category;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.Member.Entity.Enum.Gender;
@@ -69,6 +70,10 @@ public class Club {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member manager;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)

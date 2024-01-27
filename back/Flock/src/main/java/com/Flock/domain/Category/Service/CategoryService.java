@@ -1,5 +1,6 @@
 package com.Flock.domain.Category.Service;
 
+import com.Flock.domain.Category.DTO.CategoryResponseDto;
 import com.Flock.domain.Category.Entity.Category;
 import com.Flock.domain.Category.Repository.CategoryRepository;
 import com.Flock.domain.Category.DTO.CategoryRequestDto;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -35,7 +37,8 @@ public class CategoryService {
     }
 
     public ListResponse getCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<CategoryResponseDto> categories = categoryRepository.findAll()
+                .stream().map(CategoryResponseDto::from).collect(Collectors.toList());
 
         return responseService.getListResponse(categories);
     }

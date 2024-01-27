@@ -1,5 +1,7 @@
 package com.Flock.domain.Club.Service;
 
+import com.Flock.domain.Category.Entity.Category;
+import com.Flock.domain.Category.Repository.CategoryRepository;
 import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
 import com.Flock.domain.Club.Entity.Club;
@@ -31,15 +33,15 @@ public class ClubService {
 
     private final MemberService memberService;
 
-
     private final ClubRepository clubRepository;
-
 
     private final ClubTagService clubTagService;
 
     private final LikesService likesService;
 
     private final ClubMemberService clubMemberService;
+
+    private final CategoryRepository categoryRepository;
 
 
     /**
@@ -48,6 +50,10 @@ public class ClubService {
     public CommonResponse createClub(ClubRequestDto clubRequestDto, Long memberId){
 
         Optional<Member> member = memberService.findById(memberId);
+
+        Category category = categoryRepository.findById(clubRequestDto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("카테고리 정보가 없습니다."));
+
 
         List<DayOfWeek> dayOfWeeks = DayOfWeek.from(clubRequestDto.getActivityDays());
 
@@ -65,6 +71,7 @@ public class ClubService {
                 .secret(clubRequestDto.getSecret())
                 .isRecruitment(true)
                 .gender(gender)
+                .category(category)
                 .manager(member.get()).build();
 
 

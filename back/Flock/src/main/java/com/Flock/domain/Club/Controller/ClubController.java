@@ -30,7 +30,6 @@ public class ClubController {
     @GetMapping("/api/clubs")
     public ListResponse getClubs(@RequestParam(required = false, value = "title")String title){
         return responseService.getListResponse(clubService.getClubs());
-
     }
 
     /**
@@ -64,18 +63,7 @@ public class ClubController {
      * Club 수정
      */
 
-    /**
-     * 가입 신청
-     * 일단 가입신청을 하면 isMember false로 해서 ClubMember 테이블에  추가하자
-     */
 
-    /**
-     * 가입 신청 받기
-     */
-
-    /**
-     * 클럽 멤버 추방
-     */
 
 
 

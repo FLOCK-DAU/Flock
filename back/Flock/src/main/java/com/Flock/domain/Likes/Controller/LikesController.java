@@ -33,7 +33,7 @@ public class LikesController {
         }
 
         return new CommonResponse("좋아요 추가");
-        
+
     }
 
 

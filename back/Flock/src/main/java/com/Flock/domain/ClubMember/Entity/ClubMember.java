@@ -1,5 +1,6 @@
-package com.Flock.domain.Club.Entity;
+package com.Flock.domain.ClubMember.Entity;
 
+import com.Flock.domain.Club.Entity.Club;
 import com.Flock.domain.Member.Entity.Member;
 import jakarta.persistence.*;
 import lombok.*;

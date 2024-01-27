@@ -2,27 +2,22 @@ package com.Flock.domain.Club.Service;
 
 import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
-import com.Flock.domain.Club.DTO.Response.ClubResponseDto;
 import com.Flock.domain.Club.Entity.Club;
-import com.Flock.domain.Club.Entity.ClubTag;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.Club.Repository.ClubRepository;
-import com.Flock.domain.Club.Repository.ClubTagRepository;
+import com.Flock.domain.ClubMember.Service.ClubMemberService;
 import com.Flock.domain.Likes.Service.LikesService;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
-import com.Flock.domain.Member.Repository.MemberRepository;
 import com.Flock.domain.Member.Service.MemberService;
 import com.Flock.domain.Response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

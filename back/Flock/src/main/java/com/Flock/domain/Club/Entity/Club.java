@@ -1,6 +1,7 @@
 package com.Flock.domain.Club.Entity;
 
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
+import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import jakarta.persistence.*;

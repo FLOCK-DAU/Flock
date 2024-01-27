@@ -1,7 +1,7 @@
 package com.Flock.domain.Club.DTO.Response;
 
 
-import com.Flock.domain.Club.Entity.ClubMember;
+import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.Club.Entity.ClubTag;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;

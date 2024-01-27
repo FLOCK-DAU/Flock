@@ -17,7 +17,7 @@ public class CommonResponse {
     public void setSuccessResponse(String msg) {
         code = 0;
         success = true;
-        message = "SUCCESS";
+        message = msg;
     }
 
     public void setFailResponse(String msg){

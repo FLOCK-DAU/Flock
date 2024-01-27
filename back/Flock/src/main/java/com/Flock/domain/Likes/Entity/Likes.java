@@ -1,10 +1,8 @@
-package com.Flock.domain.Member.Entity;
+package com.Flock.domain.Likes.Entity;
 
 import com.Flock.domain.Club.Entity.Club;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.Flock.domain.Member.Entity.Member;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,6 +13,7 @@ import lombok.*;
 @Builder
 public class Likes {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

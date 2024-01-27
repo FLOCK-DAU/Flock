@@ -2,6 +2,8 @@ package com.Flock.domain.Likes.Service;
 
 import com.Flock.domain.Likes.Entity.Likes;
 import com.Flock.domain.Likes.Repository.LikesRepository;
+import com.Flock.global.Exception.CustomErrorCode;
+import com.Flock.global.Exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,12 @@ public class LikesService {
      * 좋아요 추가 및 삭제 (데이터베이스에 있으면 삭제하고 없으면 추가하는 함수)
      */
     public Integer updateLikes(Long clubId, Long memberId){
-        Optional<Likes> likes = likesRepository.findByClub_IdAndMember_Id(clubId,memberId);
+        Likes likes = likesRepository.findByClub_IdAndMember_Id(clubId,memberId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
 
         // 좋아요가 존재하면 삭제
-        if(likes.isPresent()){
-            likesRepository.delete(likes.get());
+        if(likes.getId() != null){
+            likesRepository.delete(likes);
             return 0;
         }
         // 존재하지 않으면 좋아요 추가

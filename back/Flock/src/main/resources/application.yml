@@ -18,6 +18,7 @@ spring:
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
   mvc:
     async:
       request-timeout: -1

@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClubMemberPermitDto {
+public class ClubMemberRequestDto {
 
     Long clubId;
     // 가입신청하려는 사람의 멤버 아이디
-    Long applicantId;
+    Long requestMemberId;
 
     Boolean isPermit;
 

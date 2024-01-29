@@ -2,6 +2,7 @@ package com.Flock.domain.ClubMember.Service;
 
 import com.Flock.domain.Club.Entity.Club;
 import com.Flock.domain.Club.Repository.ClubRepository;
+import com.Flock.domain.ClubMember.DTO.ClubMemberRequestDto;
 import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.ClubMember.Repository.ClubMemberRepository;
 import com.Flock.domain.Member.Entity.Member;
@@ -59,13 +60,13 @@ public class ClubMemberService {
     /**
      *  가입 허가
      */
-    public boolean permitClub(Long clubId, Boolean isPermit, Long applicantId, Long memberId) {
+    public boolean permitClub(Long clubId, Boolean isPermit, Long requestMemberId, Long memberId) {
         Member member = memberService.findById(memberId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Club club = clubRepository.findById(clubId)
                 .orElseThrow(()-> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
 
-        Member applicant = memberService.findById(applicantId)
+        Member applicant = memberService.findById(requestMemberId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.APPLICANT_NOT_FOUND));
 
 
@@ -83,15 +84,48 @@ public class ClubMemberService {
 
     }
 
-    /**
-     * 가입 허가
-     */
 
     /**
      *  방장의 회원 추방
      */
 
+    public String expelClubMember(ClubMemberRequestDto clubMemberRequestDto, Long memberId) {
+        Member member = memberService.findById(memberId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+
+        Club club = clubRepository.findById(clubMemberRequestDto.getClubId())
+                .orElseThrow(()-> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
+
+        Member targetMember = memberService.findById(clubMemberRequestDto.getRequestMemberId())
+                .orElseThrow(() -> new CustomException(CustomErrorCode.APPLICANT_NOT_FOUND));
+
+        if(member.getId() != club.getManager().getId()) throw new CustomException(CustomErrorCode.PERMISSION_DENIED);
+
+        Optional<ClubMember> clubMember = clubMemberRepository.findByClubAndMember(club,targetMember);
+
+        clubMemberRepository.delete(clubMember.get());
+
+        return targetMember.getMemberName();
+    }
+
+
     /**
      * 클럽 나가기
      */
+    public String leaveClubMember(Long clubId, Long memberId) {
+        Member member = memberService.findById(memberId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(()-> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
+
+        Optional<ClubMember> clubMember = clubMemberRepository.findByClubAndMember(club,member);
+
+        clubMemberRepository.delete(clubMember.get());
+
+        return club.getTitle();
+
+    }
+
+
 }

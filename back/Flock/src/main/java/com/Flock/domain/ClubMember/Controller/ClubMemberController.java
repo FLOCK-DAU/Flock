@@ -1,5 +1,6 @@
 package com.Flock.domain.ClubMember.Controller;
 
+import com.Flock.domain.ClubMember.DTO.ClubMemberPermitDto;
 import com.Flock.domain.ClubMember.Service.ClubMemberService;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
@@ -23,14 +24,13 @@ public class ClubMemberController {
      */
 
     @PostMapping("/api/clubs/{clubId}/applications")
-    public CommonResponse applyClub(@PathVariable("clubId") Long clubId, @AuthenticationPrincipal MemberDetail memberDetail){
+    public CommonResponse applyClub(@PathVariable("clubId") Long clubId, @AuthenticationPrincipal MemberDetail memberDetail) {
 
-        if(!clubMemberService.joinClub(clubId,memberDetail.getMember().getId())){
+        if (!clubMemberService.joinClub(clubId, memberDetail.getMember().getId())) {
             CommonResponse response = new CommonResponse();
             response.setFailResponse("가입신청 실패");
             return response;
-        }
-        else {
+        } else {
             return new CommonResponse("가입신청 성공");
         }
     }
@@ -39,6 +39,19 @@ public class ClubMemberController {
     /**
      * 가입 신청 받기
      */
+    @PostMapping("/api/club-member/permit")
+    public CommonResponse permitClubMember(@RequestBody ClubMemberPermitDto clubMemberPermitDto, @AuthenticationPrincipal MemberDetail memberDetail) {
+        if (!clubMemberService.permitClub(clubMemberPermitDto.getClubId(),clubMemberPermitDto.getIsPermit(),
+                clubMemberPermitDto.getApplicantId(), memberDetail.getMember().getId()))
+        {
+            CommonResponse response = new CommonResponse();
+            response.setFailResponse("가입 승인 실패");
+            return response;
+        }
+        else{
+            return new CommonResponse("가입 승인 성공");
+        }
+    }
 
     /**
      * 클럽 멤버 추방

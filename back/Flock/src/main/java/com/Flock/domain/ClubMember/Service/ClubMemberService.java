@@ -2,11 +2,12 @@ package com.Flock.domain.ClubMember.Service;
 
 import com.Flock.domain.Club.Entity.Club;
 import com.Flock.domain.Club.Repository.ClubRepository;
-import com.Flock.domain.Club.Service.ClubService;
 import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.ClubMember.Repository.ClubMemberRepository;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Service.MemberService;
+import com.Flock.global.Exception.CustomErrorCode;
+import com.Flock.global.Exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,33 @@ public class ClubMemberService {
 
         clubMemberRepository.save(clubMember);
         return true;
+    }
+
+    /**
+     *  가입 허가
+     */
+    public boolean permitClub(Long clubId, Boolean isPermit, Long applicantId, Long memberId) {
+        Member member = memberService.findById(memberId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(()-> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
+
+        Member applicant = memberService.findById(applicantId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.APPLICANT_NOT_FOUND));
+
+
+        // 방장이 아닌 경우
+        if(member.getId() != club.getManager().getId()) throw new CustomException(CustomErrorCode.PERMISSION_DENIED);
+
+        Optional<ClubMember> clubMember = clubMemberRepository.findByClubAndMember(club,applicant);
+
+        if(isPermit) {
+            clubMember.get().setIsMember(true);
+            return true;
+        }
+
+        return false;
+
     }
 
     /**

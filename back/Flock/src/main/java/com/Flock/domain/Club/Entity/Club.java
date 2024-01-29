@@ -3,6 +3,7 @@ package com.Flock.domain.Club.Entity;
 import com.Flock.domain.Category.Entity.Category;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.ClubMember.Entity.ClubMember;
+import com.Flock.domain.Likes.Entity.Likes;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import jakarta.persistence.*;
@@ -81,6 +82,9 @@ public class Club {
 
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
     private List<ClubTag> clubTags;
+
+    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
+    private List<Likes> likes;
 
     /**
      *  이 모임의 활동 요일 반환

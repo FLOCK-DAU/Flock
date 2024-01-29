@@ -26,8 +26,8 @@ public class ClubMemberService {
 
     private final ClubRepository clubRepository;
 
-    public Integer countClubMember(Club club) {
-        return clubMemberRepository.countClubMemberByClubAndIsMemberIsTrue(club.getId());
+    public Long countClubMember(Club club) {
+        return (long) clubMemberRepository.countClubMemberByClubAndIsMemberIsTrue(club.getId());
     }
 
     /**

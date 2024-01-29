@@ -47,7 +47,7 @@ public class ClubService {
     /**
      * 쿨럽 생성
      */
-    public CommonResponse createClub(ClubRequestDto clubRequestDto, Long memberId){
+    public CommonResponse createClub(ClubRequestDto clubRequestDto, Long memberId) {
 
         Optional<Member> member = memberService.findById(memberId);
 
@@ -59,7 +59,7 @@ public class ClubService {
 
         Gender gender = Gender.fromDescription(clubRequestDto.getGender());
 
-        if(!gender.equals(Gender.MIXED)) gender = member.get().getGender();
+        if (!gender.equals(Gender.MIXED)) gender = member.get().getGender();
 
         Club club = Club.builder()
                 .title(clubRequestDto.getTitle())
@@ -77,7 +77,7 @@ public class ClubService {
 
         clubRepository.save(club);
 
-        clubTagService.saveClubTag(club,clubRequestDto.getTags());
+        clubTagService.saveClubTag(club, clubRequestDto.getTags());
 
 
         return new CommonResponse(member.get().getMemberName() + "이 만든 클럽은 성공적으로 저장됨");
@@ -85,30 +85,48 @@ public class ClubService {
     }
 
 
-
     /**
      * 클럽 리스트 조회
      * 검색 조건이 있을텐데 나중에 추가해주기
      */
-    public List<ClubListDto> getClubs(){
-        List<Club> clubs = clubRepository.findAll();
+    public List<ClubListDto> getClubs() {
 
-        return clubs.stream().map(this::convertToDto).collect(Collectors.toList());
+        List<ClubListDto> clubs = clubRepository.findClubs();
+        return clubs;
+
+//        List<Club> clubs = clubRepository.findAllWithLikesAndMembers();
+//
+//        return clubs.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    private ClubListDto convertToDto(Club club){
-        List<String> tagNames = clubTagService.findByClub(club)
-                .stream()
-                .map(clubTag -> clubTag.getTag().getTagName())
-                .collect(Collectors.toList());
 
-        Integer clubLikesCount = likesService.getLikesCount(club.getId());
+//    private ClubListDto convertToDto1(Club club){
+//        List<String> tagNames = clubTagService.findByClub(club)
+//                .stream()
+//                .map(clubTag -> clubTag.getTag().getTagName())
+//                .collect(Collectors.toList());
+//
+//        Integer clubLikesCount = likesService.getLikesCount(club.getId());
+//
+//        Integer clubMemberCount = clubMemberService.countClubMember(club);
+//
+//        return new ClubListDto(club,tagNames,clubLikesCount,clubMemberCount);
+//    }
 
-        Integer clubMemberCount = clubMemberService.countClubMember(club);
 
-        return new ClubListDto(club,tagNames,clubLikesCount,clubMemberCount);
-    }
-
+    // fetch join을 사용한 방법
+//    private ClubListDto convertToDto2(Club club){
+//        List<String> tagNames = clubTagService.findByClub(club)
+//                .stream()
+//                .map(clubTag -> clubTag.getTag().getTagName())
+//                .collect(Collectors.toList());
+//
+//        Long clubLikesCount = Long.valueOf(club.getLikes().size());
+//
+//        Long clubMemberCount = clubMemberService.countClubMember(club);
+//
+//        return new ClubListDto(club,clubLikesCount,clubMemberCount,tagNames);
+//    }
 
     /**
      * 활동 주기와 활동 요일을 통해 활동일자 계산
@@ -134,14 +152,24 @@ public class ClubService {
 
     private java.time.DayOfWeek convertToJavaDayOfWeek(DayOfWeek dayOfWeek) {
         switch (dayOfWeek) {
-            case MONDAY: return java.time.DayOfWeek.MONDAY;
-            case TUESDAY: return java.time.DayOfWeek.TUESDAY;
-            case WEDNESDAY: return java.time.DayOfWeek.WEDNESDAY;
-            case THURSDAY: return java.time.DayOfWeek.THURSDAY;
-            case FRIDAY: return java.time.DayOfWeek.FRIDAY;
-            case SATURDAY: return java.time.DayOfWeek.SATURDAY;
-            case SUNDAY: return java.time.DayOfWeek.SUNDAY;
-            default: throw new IllegalArgumentException("Unknown day of week: " + dayOfWeek);
+            case MONDAY:
+                return java.time.DayOfWeek.MONDAY;
+            case TUESDAY:
+                return java.time.DayOfWeek.TUESDAY;
+            case WEDNESDAY:
+                return java.time.DayOfWeek.WEDNESDAY;
+            case THURSDAY:
+                return java.time.DayOfWeek.THURSDAY;
+            case FRIDAY:
+                return java.time.DayOfWeek.FRIDAY;
+            case SATURDAY:
+                return java.time.DayOfWeek.SATURDAY;
+            case SUNDAY:
+                return java.time.DayOfWeek.SUNDAY;
+            default:
+                throw new IllegalArgumentException("Unknown day of week: " + dayOfWeek);
         }
     }
+
+
 }

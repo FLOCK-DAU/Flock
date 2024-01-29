@@ -1,5 +1,6 @@
 package com.Flock.domain.Club.Controller;
 
+import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
 import com.Flock.domain.Club.Service.ClubService;
 import com.Flock.domain.Member.Entity.MemberDetail;
@@ -12,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,9 +29,14 @@ public class ClubController {
     /**
      * Club 리스트 조회
      */
-    @GetMapping("/api/clubs")
-    public ListResponse getClubs(@RequestParam(required = false, value = "title")String title){
-        return responseService.getListResponse(clubService.getClubs());
+    @GetMapping("/api/{categoryId}/clubs")
+    public ListResponse getClubs(@PathVariable("categoryId") Long categoryId,
+                                 @RequestParam(required = false, value = "title") String title,
+                                 @RequestParam(required = false,value = "tag")String tag) {
+
+        List<ClubListDto> clubListDtoList = clubService.getClubs();
+
+        return responseService.getListResponse(clubListDtoList);
     }
 
     /**
@@ -45,11 +52,11 @@ public class ClubController {
      * Club 생성
      */
     @PostMapping("/api/club")
-    public CommonResponse createClub(@RequestBody ClubRequestDto clubRequestDto, @AuthenticationPrincipal MemberDetail memberDetail){
+    public CommonResponse createClub(@RequestBody ClubRequestDto clubRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
 
         Long memberId = memberDetail.getMember().getId();
 
-        CommonResponse response =  clubService.createClub(clubRequestDto,memberId);
+        CommonResponse response = clubService.createClub(clubRequestDto, memberId);
 
         return response;
     }
@@ -62,11 +69,6 @@ public class ClubController {
     /**
      * Club 수정
      */
-
-
-
-
-
 
 
 }

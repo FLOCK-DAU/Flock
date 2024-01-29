@@ -9,12 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class ClubListDto {
 
     Long id;
@@ -27,27 +28,27 @@ public class ClubListDto {
 
     Gender gender;
 
-    Integer memberCount;
+    Long memberCount;
 
-    Integer likesCount;
+    Long likesCount;
 
     List<String> tags;
 
-    public ClubListDto(Long id, String title, Boolean secret, Boolean isRecruitment, Gender gender) {
-        this.id = id;
-        this.title = title;
-        this.secret = secret;
-        this.isRecruitment = isRecruitment;
-        this.gender = gender;
-    }
+//    public ClubListDto(Long id, String title, Boolean secret, Boolean isRecruitment, Gender gender) {
+//        this.id = id;
+//        this.title = title;
+//        this.secret = secret;
+//        this.isRecruitment = isRecruitment;
+//        this.gender = gender;
+//    }
 
-    public ClubListDto(Club club, List<String> tags,Integer likesCount, Integer memberCount){
+    public ClubListDto(Club club, Long likesCount, Long memberCount, Object tags){
         this.id = club.getId();
         this.title = club.getTitle();
         this.secret = club.getSecret();
         this.isRecruitment = club.getIsRecruitment();
         this.gender = club.getGender();
-        this.tags = tags;
+        this.tags = Arrays.asList(((String) tags).split(","));
 
         this.likesCount = likesCount;
         this.memberCount = memberCount;

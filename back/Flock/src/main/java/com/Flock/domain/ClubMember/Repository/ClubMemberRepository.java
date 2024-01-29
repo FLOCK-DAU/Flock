@@ -16,7 +16,7 @@ public interface ClubMemberRepository extends JpaRepository<ClubMember,Long> {
     @Query("SELECT cm.club.id, COUNT(cm) FROM ClubMember cm WHERE cm.club.id IN :clubIds AND cm.isMember = TRUE GROUP BY cm.club.id")
     List<Object[]> countMembersByClubIds(@Param("clubIds") List<Long> clubIds);
 
-    @Query("select count(cm) from ClubMember cm where cm.club.id = ?1 and cm.isMember=false")
+    @Query("select count(cm) from ClubMember cm where cm.club.id = ?1 and cm.isMember=true")
     Integer countClubMemberByClubAndIsMemberIsTrue(Long clubId);
 
     @Query("select cm from ClubMember cm where cm.club=?1 and cm.member = ?2")

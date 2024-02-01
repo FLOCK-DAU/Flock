@@ -127,38 +127,38 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(MemberService memberService){
-
-        log.info("OAuth 서비스 진입");
-
-        final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
-
-        return userRequest -> {
-            OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
-            KakaoOAuth2ResponseDto kakaoOAuth2Response = KakaoOAuth2ResponseDto.from(oAuth2User.getAttributes());
-
-
-            // 일단 카카오에서 받는 정보에는 loginId를 받아올 수 없다. 그래서 임의로 로그인아이디를 우리가 만들어준다.
-            String registrationId = userRequest.getClientRegistration().getRegistrationId(); // kakao
-            String providerId = String.valueOf(kakaoOAuth2Response.id()); // 이는 카카오에서 제공하는 Long타입의 고유값
-
-            String loginId = registrationId + "_" + providerId;
-            String dummyPassword = UUID.randomUUID().toString();
-
-            // DB에 유저가 있다면 ok, 아니라면 가입시켜야지
-
-            return memberService.searchMember(loginId)
-                    .map(MemberDetail::from)
-                    .orElseGet( () -> MemberDetail.from(memberService.saveMember(
-                            loginId,
-                            dummyPassword,
-                            kakaoOAuth2Response.nickname(),
-                            kakaoOAuth2Response.email())
-                    ));
-        };
-    }
+//    @Bean
+//    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(MemberService memberService){
+//
+//        log.info("OAuth 서비스 진입");
+//
+//        final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
+//
+//        return userRequest -> {
+//            OAuth2User oAuth2User = delegate.loadUser(userRequest);
+//
+//            KakaoOAuth2ResponseDto kakaoOAuth2Response = KakaoOAuth2ResponseDto.from(oAuth2User.getAttributes());
+//
+//
+//            // 일단 카카오에서 받는 정보에는 loginId를 받아올 수 없다. 그래서 임의로 로그인아이디를 우리가 만들어준다.
+//            String registrationId = userRequest.getClientRegistration().getRegistrationId(); // kakao
+//            String providerId = String.valueOf(kakaoOAuth2Response.id()); // 이는 카카오에서 제공하는 Long타입의 고유값
+//
+//            String loginId = registrationId + "_" + providerId;
+//            String dummyPassword = UUID.randomUUID().toString();
+//
+//            // DB에 유저가 있다면 ok, 아니라면 가입시켜야지
+//
+//            return memberService.findById(loginId)
+//                    .map(MemberDetail::from)
+//                    .orElseGet( () -> MemberDetail.from(memberService.saveMember(
+//                            loginId,
+//                            dummyPassword,
+//                            kakaoOAuth2Response.nickname(),
+//                            kakaoOAuth2Response.email())
+//                    ));
+//        };
+//    }
 
 
 }

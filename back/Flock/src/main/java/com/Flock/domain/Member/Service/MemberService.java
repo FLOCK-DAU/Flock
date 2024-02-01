@@ -45,7 +45,7 @@ public class MemberService {
     public CommonResponse signUp(SignUpRequestDto signUpRequestDto) {
         // 일단 회원가입하는 사용자는 모두 일반 사용자라고 하겠음
 
-        Optional<Member> m = memberRepository.findByUserName(signUpRequestDto.getLoginId());
+        Optional<Member> m = memberRepository.findByMail(signUpRequestDto.getMail());
 
 //        if (!m.isPresent()){
 //            // 커스텀 예외처리 해주기 : 중복되는 아이디
@@ -53,13 +53,11 @@ public class MemberService {
 //        }
 
         Member member = Member.builder()
-                .loginId(signUpRequestDto.getLoginId())
-                .password(encoder.encode(signUpRequestDto.getPassword()))
-//                .phoneNumber(signUpRequestDto.getPhoneNumber())
                 .memberName(signUpRequestDto.getMemberName())
                 .mail(signUpRequestDto.getMail())
                 .role(Role.USER)
                 .gender(Gender.valueOf(signUpRequestDto.getGender()))
+                .age_range(signUpRequestDto.getAge_range())
                 .build();
 
         memberRepository.save(member);
@@ -74,21 +72,21 @@ public class MemberService {
     /**
      * 로그인
      */
-    public SingleResponse signIn(String email, String password) {
-        Optional<Member> member = memberRepository.findByUserName(email);
+//    public SingleResponse signIn(String email, String password) {
+//        Optional<Member> member = memberRepository.findByUserName(email);
+//
+//        if (!encoder.matches(password, member.get().getPassword())) {
+//            throw new RuntimeException(); // 나중에 커스터마이징 하기
+//        }
+//
+//        String token = jwtTokenProvider.createToken(member.get().getMail(), member.get().getRole());
+//
+//        return responseService.getSingleResponse(token);
+//    }
 
-        if (!encoder.matches(password, member.get().getPassword())) {
-            throw new RuntimeException(); // 나중에 커스터마이징 하기
-        }
-
-        String token = jwtTokenProvider.createToken(member.get().getMail(), member.get().getRole());
-
-        return responseService.getSingleResponse(token);
-    }
-
-    public Optional<MemberDto> searchMember(String loginId){
-        return memberRepository.findByUserName(loginId).map(MemberDto::from);
-    }
+//    public Optional<MemberDto> searchMember(String loginId){
+//        return memberRepository.findByUserName(loginId).map(MemberDto::from);
+//    }
 
     public Optional<MemberDto> searchMemberByMail(String mail){
         return memberRepository.findByMail(mail).map(MemberDto::from);
@@ -98,21 +96,21 @@ public class MemberService {
     /**
      * 카카오유저 회원가입에서 카카오에서 받은 정보로 일단 디비에 올리기
      */
-    public MemberDto saveMember(String loginId, String password, String memberName, String mail) {
-
-        Member member = Member.builder()
-                .loginId(loginId)
-                .password(encoder.encode(password))
-                .memberName(memberName)
-                .mail(mail)
-                .role(Role.USER)
-                .build();
-
-        return MemberDto.from(
-                memberRepository.save(member)
-        );
-
-    }
+//    public MemberDto saveMember(String loginId, String password, String memberName, String mail) {
+//
+//        Member member = Member.builder()
+//                .loginId(loginId)
+//                .password(encoder.encode(password))
+//                .memberName(memberName)
+//                .mail(mail)
+//                .role(Role.USER)
+//                .build();
+//
+//        return MemberDto.from(
+//                memberRepository.save(member)
+//        );
+//
+//    }
 
     public Optional<Member> findById(Long id){
         return memberRepository.findById(id);

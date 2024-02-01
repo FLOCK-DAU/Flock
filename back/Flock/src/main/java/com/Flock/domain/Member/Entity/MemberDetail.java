@@ -52,12 +52,12 @@ public class MemberDetail implements UserDetails, OAuth2User {
     // 비밀번호 정보 제공
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return null;
     }
     // ID 정보 제공
     @Override
     public String getUsername() {
-        return member.getLoginId();
+        return member.getMail();
     }
     // 계정 만료여부 제공
     // 특별히 사용을 안할시 항상 true를 반환하도록 처리

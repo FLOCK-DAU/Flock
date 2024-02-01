@@ -25,20 +25,18 @@ public class Member {
     private Long id;
 
     // 로그인 아이디
-    @Column(nullable = false)
-    private String loginId;
-
-    @Column(nullable = false)
-    private String password;
+//    @Column(nullable = false)
+//    private String loginId;
+//
+//    @Column(nullable = false)
+//    private String password;
 
 //    @Column(nullable = false, unique = true)
 //    private String phoneNumber;
 
 
     // 사용자명
-
     private String memberName;
-
 
     private String mail;
 
@@ -47,6 +45,8 @@ public class Member {
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+
+    private Integer age_range;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

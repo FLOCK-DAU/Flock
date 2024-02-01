@@ -13,4 +13,6 @@ public class TokenResponse {
     String token;
     String email;
     String nickname;
+    Boolean isMember;
+    String msg;
 }

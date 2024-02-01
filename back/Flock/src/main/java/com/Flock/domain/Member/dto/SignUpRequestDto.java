@@ -1,5 +1,6 @@
 package com.Flock.domain.Member.DTO;
 
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,15 +9,14 @@ import lombok.Setter;
 @Getter
 @RequiredArgsConstructor
 public class SignUpRequestDto {
-    String loginId;
-
-    String password;
-
-    String phoneNumber;
 
     String memberName;
 
     String mail;
 
     String gender;
+
+    Integer age_range;
+
+
 }

@@ -19,5 +19,14 @@ public enum Gender {
         throw new IllegalArgumentException("Gender와 일치하는 description이 아닙니다 : " + description);
     }
 
+    public static Gender fromString(String gender){
+        for(Gender gender1 : Gender.values()){
+            if(gender1.name().equalsIgnoreCase(gender)) return gender1;
+
+        }
+        throw new IllegalArgumentException("Gender와 일치하는 성별이 아닙니다 : " + gender);
+    }
+
+
 
 }

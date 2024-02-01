@@ -7,6 +7,8 @@ import com.Flock.domain.Member.DTO.TokenResponse;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Entity.Enum.Role;
 import com.Flock.domain.Member.Repository.MemberRepository;
+import com.Flock.domain.Response.ResponseService;
+import com.Flock.domain.Response.SingleResponse;
 import com.Flock.global.security.config.JwtTokenProvider;
 import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,8 @@ public class OAuth2Service {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    private final ResponseService responseService;
 
 
 
@@ -108,7 +112,7 @@ public class OAuth2Service {
         return kakaoProfile;
     }
 
-    public TokenResponse getTokenResponse(KakaoProfile userInfo){
+    public SingleResponse getTokenResponse(KakaoProfile userInfo){
         Optional<MemberDto> memberDto = memberService.searchMemberByMail(userInfo.getEmail());
 
         // 회원이 우리 데이터베이스에 존재하는 경우
@@ -118,31 +122,15 @@ public class OAuth2Service {
             TokenResponse tokenResponse = TokenResponse.builder()
                     .token(token)
                     .email(memberDto.get().getMail())
-                    .nickname(memberDto.get().getMemberName()).build();
-            return tokenResponse;
+                    .nickname(memberDto.get().getMemberName())
+                    .isMember(true)
+                    .msg("가입되어 있는 회원입니다.")
+                    .build();
+            return responseService.getSingleResponse(tokenResponse);
         }
         // 회원이 우리 데이터베이스에 존재하지 않는 경우 : 자동으로 회원가입 시키는 로직 추가
         else {
-            log.info("회원 존재하지 않은 데이터베이스 삽입 과정 시작");
-
-            Member member = Member.builder()
-                    .loginId("kakao" + userInfo.getId())
-                    .password(encoder.encode(UUID.randomUUID().toString()))
-                    .memberName(userInfo.getNickname())
-                    .mail(userInfo.getEmail())
-                    .role(Role.USER)
-                    .build();
-
-            memberRepository.save(member);
-
-            String token = jwtTokenProvider.createToken(userInfo.getEmail(), Role.USER);
-
-            TokenResponse tokenResponse = TokenResponse.builder()
-                    .token(token)
-                    .email(userInfo.getEmail())
-                    .nickname(userInfo.getNickname()).build();
-            return tokenResponse;
-
+            return responseService.getSingleResponse(userInfo);
         }
     }
 }

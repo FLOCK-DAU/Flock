@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class MemberDto {
     Long id;
 
-    String loginId;
-
-    String password;
+//    String loginId;
+//
+//    String password;
 
 //    String phoneNumber;
 
@@ -28,27 +28,31 @@ public class MemberDto {
 
     String gender;
 
+    Integer age_range;
+
     LocalDateTime createdAt;
 
 
-    public MemberDto(Long id, String loginId, String password, String memberName, String mail, String role) {
+    public MemberDto(Long id,  String memberName, String mail, String role, Integer age_range) {
         this.id = id;
-        this.loginId = loginId;
-        this.password = password;
+//        this.loginId = loginId;
+//        this.password = password;
         this.memberName = memberName;
         this.mail = mail;
         this.role = role;
+        this.age_range = age_range;
     }
 
     public static MemberDto from(Member member){
         return new MemberDto(
                 member.getId(),
-                member.getLoginId(),
-                member.getPassword(),
+//                member.getLoginId(),
+//                member.getPassword(),
 //                member.getPhoneNumber(),
                 member.getMemberName(),
                 member.getMail(),
-                member.getRole().name()
+                member.getRole().name(),
+                member.getAge_range()
 //                member.getGender().name(),
 //                member.getCreatedAt()
         );

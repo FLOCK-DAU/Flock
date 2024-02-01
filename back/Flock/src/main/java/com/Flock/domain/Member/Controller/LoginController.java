@@ -38,13 +38,13 @@ public class LoginController {
     @Autowired
     ResponseService responseService;
 
-    @Operation(summary = "로그인", description = "로그인 기능입니다.")
-    @PostMapping("/api/sign-in")
-    public SingleResponse signIn(@RequestBody SignInRequestDto sign){
-        SingleResponse singleResponse = memberService.signIn(sign.getLoginId(), sign.getPassword());
-
-        return singleResponse;
-    }
+//    @Operation(summary = "로그인", description = "로그인 기능입니다.")
+//    @PostMapping("/api/sign-in")
+//    public SingleResponse signIn(@RequestBody SignInRequestDto sign){
+//        SingleResponse singleResponse = memberService.signIn(sign.getLoginId(), sign.getPassword());
+//
+//        return singleResponse;
+//    }
 
     @Operation(summary = "회원가입")
     @PostMapping("/api/sign-up")
@@ -57,8 +57,8 @@ public class LoginController {
      * 리액트에서 인가코드와 함께 요청하는 걸 받기
      */
     @PostMapping("/login/oauth2/code/kakao")
-    public SingleResponse getAccessToken2(@RequestBody Map<String,Object> param){
-        String code = param.get("code").toString();
+    public SingleResponse getAccessToken2(String code){
+
 
         log.info("인가코드 : " + code);
 
@@ -68,12 +68,14 @@ public class LoginController {
 
         KakaoProfile userInfo = oAuth2Service.getUserInfo(kakao_access_token);
 
-        TokenResponse tokenResponse = oAuth2Service.getTokenResponse(userInfo);
+        return oAuth2Service.getTokenResponse(userInfo);
 
         // 이제 데이터베이스 불러서 있는지 확인하고 jwt 생성하고 시큐리티 컨텍스트에 등록
 
-        return responseService.getSingleResponse(tokenResponse);
+//        return responseService.getSingleResponse(tokenResponse);
     }
+
+
 
 
 

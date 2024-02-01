@@ -1,4 +1,4 @@
-package com.Flock.domain.Member.Entity;
+package com.Flock.domain.Member.Entity.Enum;
 
 import lombok.Getter;
 

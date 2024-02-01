@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -89,9 +88,11 @@ public class ClubService {
      * 클럽 리스트 조회
      * 검색 조건이 있을텐데 나중에 추가해주기
      */
-    public List<ClubListDto> getClubs() {
+    public List<ClubListDto> getClubs(Long categoryId, String title, String tag) {
 
         List<ClubListDto> clubs = clubRepository.findClubs();
+
+
         return clubs;
 
 //        List<Club> clubs = clubRepository.findAllWithLikesAndMembers();

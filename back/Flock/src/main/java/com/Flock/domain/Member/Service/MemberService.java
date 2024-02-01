@@ -3,8 +3,7 @@ package com.Flock.domain.Member.Service;
 import com.Flock.domain.Member.DTO.MemberDto;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
-import com.Flock.domain.Member.Entity.MemberDetail;
-import com.Flock.domain.Member.Entity.Role;
+import com.Flock.domain.Member.Entity.Enum.Role;
 import com.Flock.domain.Member.Repository.MemberRepository;
 import com.Flock.domain.Member.DTO.SignUpRequestDto;
 import com.Flock.domain.Response.CommonResponse;
@@ -18,9 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Slf4j
 @Transactional

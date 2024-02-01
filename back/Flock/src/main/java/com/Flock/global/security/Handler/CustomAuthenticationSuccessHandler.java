@@ -1,6 +1,6 @@
 package com.Flock.global.security.Handler;
 
-import com.Flock.domain.Member.Entity.Role;
+import com.Flock.domain.Member.Entity.Enum.Role;
 import com.Flock.global.security.config.JwtTokenProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

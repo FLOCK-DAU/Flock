@@ -1,11 +1,8 @@
 package com.Flock.domain.Member.Controller;
 
-import com.Flock.domain.Member.DTO.KakaoProfile;
-import com.Flock.domain.Member.DTO.TokenResponse;
+import com.Flock.domain.Member.DTO.*;
 import com.Flock.domain.Member.Repository.MemberRepository;
 import com.Flock.domain.Member.Service.MemberService;
-import com.Flock.domain.Member.DTO.SignInRequestDto;
-import com.Flock.domain.Member.DTO.SignUpRequestDto;
 import com.Flock.domain.Member.Service.OAuth2Service;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ResponseService;
@@ -17,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @Slf4j
@@ -57,9 +56,15 @@ public class LoginController {
     /**
      * 리액트에서 인가코드와 함께 요청하는 걸 받기
      */
-    @GetMapping("/login/oauth2/code/kakao")
-    public SingleResponse getAccessToken2(@RequestParam("code") String code){
+    @PostMapping("/login/oauth2/code/kakao")
+    public SingleResponse getAccessToken2(@RequestBody Map<String,Object> param){
+        String code = param.get("code").toString();
+
+        log.info("인가코드 : " + code);
+
+
         String kakao_access_token = oAuth2Service.getOAuthToken(code);
+
 
         KakaoProfile userInfo = oAuth2Service.getUserInfo(kakao_access_token);
 
@@ -96,6 +101,11 @@ public class LoginController {
 //        return ResponseEntity.ok(member);
 //
 //    }
+
+    public class testDto{
+        String code;
+
+    }
 
 
 

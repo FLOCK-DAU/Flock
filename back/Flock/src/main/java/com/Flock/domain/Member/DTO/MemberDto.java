@@ -1,9 +1,7 @@
 package com.Flock.domain.Member.DTO;
 
 
-import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
-import com.Flock.domain.Member.Entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

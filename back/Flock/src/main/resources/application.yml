@@ -1,4 +1,8 @@
 
+server:
+  port: 25565 # 원하는 포트 번호로 변경
+
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -45,6 +49,6 @@ spring:
 jwt:
     secret: flature!@#
 
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    root: debug

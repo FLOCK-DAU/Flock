@@ -2,6 +2,7 @@ package com.Flock.domain.Member.Entity;
 
 import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.Member.Entity.Enum.Gender;
+import com.Flock.domain.Member.Entity.Enum.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

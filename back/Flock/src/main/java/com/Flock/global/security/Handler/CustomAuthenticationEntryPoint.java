@@ -1,4 +1,4 @@
-package com.Flock.global.security.config;
+package com.Flock.global.security.Handler;
 
 import com.Flock.domain.Response.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

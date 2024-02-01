@@ -1,10 +1,11 @@
 package com.Flock.global.security.config;
 
 import com.Flock.domain.Member.Entity.MemberDetail;
-import com.Flock.domain.Member.Entity.Role;
+import com.Flock.domain.Member.Entity.Enum.Role;
 import com.Flock.domain.Member.Service.MemberService;
 import com.Flock.global.security.DTO.KakaoOAuth2ResponseDto;
 import com.Flock.global.security.Handler.CustomAccessDeniedHandler;
+import com.Flock.global.security.Handler.CustomAuthenticationEntryPoint;
 import com.Flock.global.security.Handler.CustomAuthenticationFailureHandler;
 import com.Flock.global.security.Handler.CustomAuthenticationSuccessHandler;
 import com.Flock.global.security.service.CustomMemberDetailSerivce;
@@ -97,7 +98,7 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests
-//                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/**").permitAll()
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resource의 static폴더 내부 허용
                                         .requestMatchers("/v3/api-docs/**","/swagger-resources/**","/swagger-ui/**","/api-docs/**","/static/**").permitAll()
                                         .requestMatchers("/api/sign-in", "/test-login","/login/**").permitAll()

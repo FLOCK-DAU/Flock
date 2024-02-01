@@ -34,7 +34,7 @@ public class ClubController {
                                  @RequestParam(required = false, value = "title") String title,
                                  @RequestParam(required = false,value = "tag")String tag) {
 
-        List<ClubListDto> clubListDtoList = clubService.getClubs();
+        List<ClubListDto> clubListDtoList = clubService.getClubs(categoryId,title,tag);
 
         return responseService.getListResponse(clubListDtoList);
     }

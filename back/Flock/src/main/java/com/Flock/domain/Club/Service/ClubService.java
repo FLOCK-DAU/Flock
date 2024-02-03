@@ -5,6 +5,7 @@ import com.Flock.domain.Category.Repository.CategoryRepository;
 import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
 import com.Flock.domain.Club.Entity.Club;
+import com.Flock.domain.Club.Entity.ClubTag;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.Club.Repository.ClubRepository;
 import com.Flock.domain.ClubMember.Service.ClubMemberService;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,19 +87,47 @@ public class ClubService {
 
 
     /**
-     * 클럽 리스트 조회
+     * 클럽 리스트 조회 (카테고리 : 전체)
      * 검색 조건이 있을텐데 나중에 추가해주기
      */
-    public List<ClubListDto> getClubs(Long categoryId, String title, String tag) {
+    public List<ClubListDto> getClubs(String title, String tag) {
 
-        List<ClubListDto> clubs = clubRepository.findClubs();
+        List<ClubListDto> clubs = new ArrayList<>();
 
+        if (title == null && tag == null) {
+            clubs = clubRepository.findAllClubs();
+        } else if (title != null && tag == null) {
+            clubs = clubRepository.findClubsByTitle(title);
+        } else if (title == null && tag != null) {
+            ClubTag clubtag = clubTagService.findByTagName(tag);
+            clubs = clubRepository.findClubsByTag(clubtag);
+        }
 
         return clubs;
 
 //        List<Club> clubs = clubRepository.findAllWithLikesAndMembers();
 //
 //        return clubs.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    /**
+     * 클럽 리스트 조회 (카테고리 적용)
+     */
+    public List<ClubListDto> getClubsWithCategoryId(Long categoryId, String title, String tag) {
+
+
+        List<ClubListDto> clubs = new ArrayList<>();
+
+        if (title == null && tag == null) {
+            clubs = clubRepository.findAllClubsWithCategory(categoryId);
+        } else if (title != null && tag == null) {
+            clubs = clubRepository.findClubsByTitleWithCategory(categoryId, title);
+        } else if (title == null && tag != null) {
+            ClubTag clubtag = clubTagService.findByTagName(tag);
+            clubs = clubRepository.findClubsByTagWithCategory(categoryId, clubtag);
+        }
+
+        return clubs;
     }
 
 

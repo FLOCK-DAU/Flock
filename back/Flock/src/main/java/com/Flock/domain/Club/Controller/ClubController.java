@@ -7,6 +7,8 @@ import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ListResponse;
 import com.Flock.domain.Response.ResponseService;
+import com.Flock.domain.Response.SingleResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,19 +31,28 @@ public class ClubController {
     /**
      * Club 리스트 조회
      */
+    @Operation(description = "클럽 리스트 조회 : 카테고리아이디가 0이면 카테고리 상관없이 조회한다.")
     @GetMapping("/api/{categoryId}/clubs")
     public ListResponse getClubs(@PathVariable("categoryId") Long categoryId,
                                  @RequestParam(required = false, value = "title") String title,
-                                 @RequestParam(required = false,value = "tag")String tag) {
+                                 @RequestParam(required = false, value = "tag") String tag) {
 
-        List<ClubListDto> clubListDtoList = clubService.getClubs(categoryId,title,tag);
+        List<ClubListDto> clubListDtoList;
+
+        if (categoryId == 0) {
+            clubListDtoList = clubService.getClubs(title, tag);
+        } else {
+            clubListDtoList = clubService.getClubsWithCategoryId(categoryId, title, tag);
+        }
+
 
         return responseService.getListResponse(clubListDtoList);
     }
 
     /**
-     * 인기 Club 조회
+     * 인기 Club 조회 (좋아요 1당 x a) + ....
      */
+
 
     /**
      * 클럽 최신 순 조회 Top 5
@@ -51,6 +62,7 @@ public class ClubController {
     /**
      * Club 생성
      */
+    @Operation(description = "클럽 생성")
     @PostMapping("/api/club")
     public CommonResponse createClub(@RequestBody ClubRequestDto clubRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
 
@@ -64,6 +76,10 @@ public class ClubController {
     /**
      * Club 상세 조회
      */
+//    @GetMapping("/api/club")
+//    public SingleResponse getClubDetails(@RequestParam("clubId") Long clubId){
+//
+//    }
 
 
     /**

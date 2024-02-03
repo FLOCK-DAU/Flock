@@ -35,6 +35,11 @@ public class ClubTagService {
 
     }
 
+    public ClubTag findByTagName(String tag){
+        ClubTag clubTag = clubTagRepository.findByTagName(tag);
+        return clubTag;
+    }
+
     private Long mapTagToClub(Club club, Tag tag){
         ClubTag clubTag = ClubTag.builder()
                 .club(club)

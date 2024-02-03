@@ -5,6 +5,7 @@ import com.Flock.domain.ClubMember.Service.ClubMemberService;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ResponseService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class ClubMemberController {
      * 일단 가입신청을 하면 isMember false로 해서 ClubMember 테이블에  추가하자
      */
 
+    @Operation(description = "일반 회원의 클럽 가입 신청")
     @PostMapping("/api/clubs/{clubId}/applications")
     public CommonResponse applyClub(@PathVariable("clubId") Long clubId, @AuthenticationPrincipal MemberDetail memberDetail) {
 
@@ -39,6 +41,7 @@ public class ClubMemberController {
     /**
      * 가입 신청 받기
      */
+    @Operation(description = "방장의 멤버의 가입 신청 받기")
     @PostMapping("/api/club-member/permit")
     public CommonResponse permitClubMember(@RequestBody ClubMemberRequestDto clubMemberRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
         if (!clubMemberService.permitClub(clubMemberRequestDto.getClubId(), clubMemberRequestDto.getIsPermit(),
@@ -56,6 +59,7 @@ public class ClubMemberController {
     /**
      * 클럽 멤버 추방
      */
+    @Operation(description = "방장이 클럽 멤버를 추방한다")
     @PostMapping("/api/club-member/expel")
     public CommonResponse expelClubMember(@RequestBody ClubMemberRequestDto clubMemberRequestDto, @AuthenticationPrincipal MemberDetail memberDetail){
 
@@ -68,6 +72,7 @@ public class ClubMemberController {
     /**
      * 클럽 나가기
      */
+    @Operation(description = "클럽 멤버의 클럽 나가기")
     @PostMapping("/api/club-member/leave")
     public CommonResponse leaveClub(Long clubId, @AuthenticationPrincipal MemberDetail memberDetail){
 

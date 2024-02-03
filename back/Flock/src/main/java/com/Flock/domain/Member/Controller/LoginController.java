@@ -9,9 +9,12 @@ import com.Flock.domain.Response.ResponseService;
 import com.Flock.domain.Response.SingleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +55,8 @@ public class LoginController {
         CommonResponse response = memberService.signUp(signUpRequestDto);
         return response;
     }
+
+
 
     /**
      * 리액트에서 인가코드와 함께 요청하는 걸 받기
@@ -106,13 +111,6 @@ public class LoginController {
 //        return ResponseEntity.ok(member);
 //
 //    }
-
-    public class testDto{
-        String code;
-
-    }
-
-
 
 
 }

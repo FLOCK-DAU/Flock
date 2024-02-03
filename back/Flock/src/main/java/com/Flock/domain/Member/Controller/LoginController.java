@@ -57,8 +57,9 @@ public class LoginController {
      * 리액트에서 인가코드와 함께 요청하는 걸 받기
      */
     @PostMapping("/login/oauth2/code/kakao")
-    public SingleResponse getAccessToken2(String code){
+    public SingleResponse getAccessToken2(@RequestBody Map<String,Object> param){
 
+        String code = param.get("code").toString();
 
         log.info("인가코드 : " + code);
 

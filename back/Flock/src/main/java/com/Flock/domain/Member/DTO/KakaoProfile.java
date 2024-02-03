@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Slf4j
 public class KakaoProfile {
+
     private Integer id;
     private LocalDateTime connectedAt;
     private String email;

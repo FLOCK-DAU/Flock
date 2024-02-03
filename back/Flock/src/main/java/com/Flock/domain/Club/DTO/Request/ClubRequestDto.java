@@ -41,7 +41,7 @@ public class ClubRequestDto {
     @Schema(description = "클럽 카테고리 아이디")
     Integer categoryId;
 
-    @Schema(description = "클럽 태그 : # 빼고 주면 됨", examples = {"스포츠","축구","여자만"})
+    @Schema(description = "클럽 태그 : # 빼고 주면 됨", example = "[\"운동\",\"축구\",\"하단\"]")
     List<String> Tags;
 
 }

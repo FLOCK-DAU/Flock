@@ -23,7 +23,7 @@ public class ClubRequestDto {
     @Schema(description = "클럽 최대인원 : 방장이 설정")
     Integer maximum;
 
-    @Schema(description = "클럽 활동 요일 : 복수 입력", example = "월요일,금요일,일요일")
+    @Schema(description = "클럽 활동 요일 : 복수 입력", example = "[\"월요일\",\"금요일\",\"일요일\"]")
     List<String> activityDays;
 
     @Schema(description = "클럽 활동 주기 : Integer")
@@ -35,7 +35,7 @@ public class ClubRequestDto {
     @Schema(description = "클럽 모집 하는 중 / 모집 안 함")
     Boolean isRecruitment;
 
-    @Schema(description = "클럽 성별", examples = {"MALE","FEMALE","MIXED"})
+    @Schema(description = "클럽 성별 ( value : 남자, 여자, 혼성)", example = "남자")
     String gender;
 
     @Schema(description = "클럽 카테고리 아이디")

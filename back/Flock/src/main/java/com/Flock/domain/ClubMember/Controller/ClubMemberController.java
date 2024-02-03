@@ -24,7 +24,7 @@ public class ClubMemberController {
      * 일단 가입신청을 하면 isMember false로 해서 ClubMember 테이블에  추가하자
      */
 
-    @Operation(description = "일반 회원의 클럽 가입 신청")
+    @Operation(summary = "일반 회원의 클럽 가입 신청")
     @PostMapping("/api/clubs/{clubId}/applications")
     public CommonResponse applyClub(@PathVariable("clubId") Long clubId, @AuthenticationPrincipal MemberDetail memberDetail) {
 
@@ -41,29 +41,27 @@ public class ClubMemberController {
     /**
      * 가입 신청 받기
      */
-    @Operation(description = "방장의 멤버의 가입 신청 받기")
+    @Operation(summary = "방장의 멤버의 가입 신청 받기")
     @PostMapping("/api/club-member/permit")
     public CommonResponse permitClubMember(@RequestBody ClubMemberRequestDto clubMemberRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
-        if (!clubMemberService.permitClub(clubMemberRequestDto.getClubId(), clubMemberRequestDto.getIsPermit(),
-                clubMemberRequestDto.getRequestMemberId(), memberDetail.getMember().getId()))
-        {
-            CommonResponse response = new CommonResponse();
-            response.setFailResponse("가입 승인 실패");
-            return response;
-        }
-        else{
-            return new CommonResponse("가입 승인 성공");
-        }
+
+        clubMemberService.permitClub(clubMemberRequestDto.getClubId(), clubMemberRequestDto.getRequestMemberId(), memberDetail.getMember().getId());
+
+        CommonResponse response = new CommonResponse();
+        response.setFailResponse("가입 승인");
+        return response;
+
+
     }
 
     /**
      * 클럽 멤버 추방
      */
-    @Operation(description = "방장이 클럽 멤버를 추방한다")
+    @Operation(summary = "방장이 클럽 멤버를 추방한다")
     @PostMapping("/api/club-member/expel")
-    public CommonResponse expelClubMember(@RequestBody ClubMemberRequestDto clubMemberRequestDto, @AuthenticationPrincipal MemberDetail memberDetail){
+    public CommonResponse expelClubMember(@RequestBody ClubMemberRequestDto clubMemberRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
 
-        String targetMember = clubMemberService.expelClubMember(clubMemberRequestDto,memberDetail.getMember().getId());
+        String targetMember = clubMemberService.expelClubMember(clubMemberRequestDto, memberDetail.getMember().getId());
 
         return new CommonResponse(targetMember + " 추방 성공");
     }
@@ -72,11 +70,11 @@ public class ClubMemberController {
     /**
      * 클럽 나가기
      */
-    @Operation(description = "클럽 멤버의 클럽 나가기")
+    @Operation(summary = "클럽 멤버의 클럽 나가기")
     @PostMapping("/api/club-member/leave")
-    public CommonResponse leaveClub(Long clubId, @AuthenticationPrincipal MemberDetail memberDetail){
+    public CommonResponse leaveClub(Long clubId, @AuthenticationPrincipal MemberDetail memberDetail) {
 
-        String clubTitle = clubMemberService.leaveClubMember(clubId,memberDetail.getMember().getId());
+        String clubTitle = clubMemberService.leaveClubMember(clubId, memberDetail.getMember().getId());
 
         return new CommonResponse(clubTitle + "을 나갔습니다.");
     }

@@ -5,6 +5,7 @@ import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
 import com.Flock.domain.Response.ResponseService;
 import com.Flock.domain.Response.SingleResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,7 @@ public class LikesController {
     /**
      * Club 좋아요 업데이트
      */
+    @Operation(description = "좋아요 누르기")
     @GetMapping("/api/likes")
     public CommonResponse updateLikes(Long clubId, @AuthenticationPrincipal MemberDetail memberDetail){
 

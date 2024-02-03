@@ -31,7 +31,7 @@ public class ClubController {
     /**
      * Club 리스트 조회
      */
-    @Operation(description = "클럽 리스트 조회 : 카테고리아이디가 0이면 카테고리 상관없이 조회한다.")
+    @Operation(summary = "클럽 리스트 조회 : ", description = "카테고리아이디가 0이면 카테고리 상관없이 조회한다.")
     @GetMapping("/api/{categoryId}/clubs")
     public ListResponse getClubs(@PathVariable("categoryId") Long categoryId,
                                  @RequestParam(required = false, value = "title") String title,
@@ -62,7 +62,7 @@ public class ClubController {
     /**
      * Club 생성
      */
-    @Operation(description = "클럽 생성")
+    @Operation(summary = "클럽 생성 : Swagger 페이지 하단의 ClubRequestDto 참고")
     @PostMapping("/api/club")
     public CommonResponse createClub(@RequestBody ClubRequestDto clubRequestDto, @AuthenticationPrincipal MemberDetail memberDetail) {
 

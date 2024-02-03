@@ -60,7 +60,7 @@ public class ClubMemberService {
     /**
      *  가입 허가
      */
-    public boolean permitClub(Long clubId, Boolean isPermit, Long requestMemberId, Long memberId) {
+    public void permitClub(Long clubId, Long requestMemberId, Long memberId) {
         Member member = memberService.findById(memberId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Club club = clubRepository.findById(clubId)
@@ -75,12 +75,10 @@ public class ClubMemberService {
 
         Optional<ClubMember> clubMember = clubMemberRepository.findByClubAndMember(club,applicant);
 
-        if(isPermit) {
-            clubMember.get().setIsMember(true);
-            return true;
-        }
 
-        return false;
+        clubMember.get().setIsMember(true);
+
+        clubMemberRepository.save(clubMember.get());
 
     }
 

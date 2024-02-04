@@ -99,7 +99,7 @@ public class ClubService {
         } else if (title != null && tag == null) {
             clubs = clubRepository.findClubsByTitle(title);
         } else if (title == null && tag != null) {
-            ClubTag clubtag = clubTagService.findByTagName(tag);
+            List<ClubTag> clubtag = clubTagService.findByTagName(tag);
             clubs = clubRepository.findClubsByTag(clubtag);
         }
 
@@ -123,7 +123,7 @@ public class ClubService {
         } else if (title != null && tag == null) {
             clubs = clubRepository.findClubsByTitleWithCategory(categoryId, title);
         } else if (title == null && tag != null) {
-            ClubTag clubtag = clubTagService.findByTagName(tag);
+            List<ClubTag> clubtag = clubTagService.findByTagName(tag);
             clubs = clubRepository.findClubsByTagWithCategory(categoryId, clubtag);
         }
 

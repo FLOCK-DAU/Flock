@@ -34,8 +34,8 @@ public interface ClubRepository extends JpaRepository<Club,Long> {
             "(SELECT COUNT(l) FROM Likes l WHERE l.club = c), " +
             "(SELECT COUNT(cm) FROM ClubMember cm WHERE cm.club = c AND cm.isMember = true), " +
             "(SELECT GROUP_CONCAT(t.tagName) FROM ClubTag ct JOIN ct.tag t WHERE ct.club = c)) " +
-            "FROM Club c where c.clubTags = ?1")
-    List<ClubListDto> findClubsByTag(ClubTag clubTag);
+            "FROM Club c JOIN c.clubTags ct WHERE ct IN ?1")
+    List<ClubListDto> findClubsByTag(List<ClubTag> clubTag);
 
 
     @Query("SELECT new com.Flock.domain.Club.DTO.ClubListDto(c, " +
@@ -59,6 +59,6 @@ public interface ClubRepository extends JpaRepository<Club,Long> {
             "(SELECT COUNT(l) FROM Likes l WHERE l.club = c), " +
             "(SELECT COUNT(cm) FROM ClubMember cm WHERE cm.club = c AND cm.isMember = true), " +
             "(SELECT GROUP_CONCAT(t.tagName) FROM ClubTag ct JOIN ct.tag t WHERE ct.club = c)) " +
-            "FROM Club c where c.clubTags = ?2 and c.category.id = ?1")
-    List<ClubListDto> findClubsByTagWithCategory(Long categoryId, ClubTag clubtag);
+            "FROM Club c JOIN c.clubTags ct WHERE ct IN ?2 and c.category.id = ?1")
+    List<ClubListDto> findClubsByTagWithCategory(Long categoryId, List<ClubTag> clubTags);
 }

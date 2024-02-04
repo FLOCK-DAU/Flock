@@ -17,5 +17,5 @@ public interface ClubTagRepository extends JpaRepository<ClubTag,Long> {
     List<ClubTag> findByClub(Club club);
 
     @Query("select ct from ClubTag ct where ct.tag.tagName like concat('%', ?1 , '%')")
-    ClubTag findByTagName(String tag);
+    List<ClubTag> findByTagName(String tag);
 }

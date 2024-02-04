@@ -35,8 +35,8 @@ public class ClubTagService {
 
     }
 
-    public ClubTag findByTagName(String tag){
-        ClubTag clubTag = clubTagRepository.findByTagName(tag);
+    public List<ClubTag> findByTagName(String tag){
+        List<ClubTag> clubTag = clubTagRepository.findByTagName(tag);
         return clubTag;
     }
 

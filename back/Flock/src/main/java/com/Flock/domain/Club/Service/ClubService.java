@@ -4,16 +4,24 @@ import com.Flock.domain.Category.Entity.Category;
 import com.Flock.domain.Category.Repository.CategoryRepository;
 import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
+import com.Flock.domain.Club.DTO.Response.ClubResponseDto;
 import com.Flock.domain.Club.Entity.Club;
 import com.Flock.domain.Club.Entity.ClubTag;
 import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
 import com.Flock.domain.Club.Repository.ClubRepository;
+import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.ClubMember.Service.ClubMemberService;
 import com.Flock.domain.Likes.Service.LikesService;
+import com.Flock.domain.Member.DTO.MemberDto;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import com.Flock.domain.Member.Service.MemberService;
 import com.Flock.domain.Response.CommonResponse;
+import com.Flock.domain.Response.SingleResponse;
+import com.Flock.domain.Tag.DTO.TagDto;
+import com.Flock.domain.Tag.Service.TagService;
+import com.Flock.global.Exception.CustomErrorCode;
+import com.Flock.global.Exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,6 +51,8 @@ public class ClubService {
     private final ClubMemberService clubMemberService;
 
     private final CategoryRepository categoryRepository;
+
+    private final TagService tagService;
 
 
     /**
@@ -82,6 +92,31 @@ public class ClubService {
 
 
         return new CommonResponse(member.get().getMemberName() + "이 만든 클럽은 성공적으로 저장됨");
+
+    }
+
+    /**
+     * 클럽 상세정보
+     */
+    public ClubResponseDto getClub(Long clubId, Long memberId) {
+
+        Member member = memberService.findById(memberId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.CLUB_NOT_FOUND));
+
+        List<MemberDto> memberDto = memberService.findByClubMemberId(club.getClubMembers());
+
+        List<TagDto> tagDtos = tagService.findByClub(club);
+
+        boolean isManager = false;
+
+        if (member.getId() == club.getManager().getId()) isManager = true;
+
+        ClubResponseDto clubResponseDto = new ClubResponseDto(club,memberDto,tagDtos, isManager);
+
+        return clubResponseDto;
 
     }
 

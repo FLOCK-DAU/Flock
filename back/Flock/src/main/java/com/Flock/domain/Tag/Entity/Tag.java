@@ -21,5 +21,8 @@ public class Tag {
     @Column(unique = true,nullable = false)
     private String tagName;
 
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    private List<ClubTag> clubTags;
+
 
 }

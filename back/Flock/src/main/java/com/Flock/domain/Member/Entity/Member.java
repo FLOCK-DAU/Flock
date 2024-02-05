@@ -53,7 +53,7 @@ public class Member {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<ClubMember> clubMembers;
 
 

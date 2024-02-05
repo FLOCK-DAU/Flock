@@ -1,5 +1,6 @@
 package com.Flock.domain.Member.Service;
 
+import com.Flock.domain.ClubMember.Entity.ClubMember;
 import com.Flock.domain.Member.DTO.MemberDto;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
@@ -17,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -114,5 +117,15 @@ public class MemberService {
 
     public Optional<Member> findById(Long id){
         return memberRepository.findById(id);
+    }
+
+    public List<MemberDto> findByClubMemberId(List<ClubMember> clubMembers) {
+
+        List<MemberDto> memberDtos = memberRepository.findByClubMemberId(clubMembers)
+                .stream().map(MemberDto::from).collect(Collectors.toList());
+
+        return memberDtos;
+
+
     }
 }

@@ -1,10 +1,12 @@
 package com.Flock.domain.Club.DTO.Response;
 
 
-import com.Flock.domain.ClubMember.Entity.ClubMember;
-import com.Flock.domain.Club.Entity.ClubTag;
+import com.Flock.domain.Club.Entity.Club;
+import com.Flock.domain.Club.Entity.Enum.DayOfWeek;
+import com.Flock.domain.Member.DTO.MemberDto;
 import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
+import com.Flock.domain.Tag.DTO.TagDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,7 @@ public class ClubResponseDto {
 
     LocalDateTime activityDate;
 
-    List<String> activityDays;
+    List<DayOfWeek> activityDays;
 
     Integer activityFrequency;
 
@@ -40,11 +42,31 @@ public class ClubResponseDto {
 
     LocalDateTime createdAt;
 
-    Member manager;
+    MemberDto manager;
 
-    List<ClubMember> clubMembers;
+    List<MemberDto> clubMembers;
 
-    List<ClubTag> clubTags;
+    List<TagDto> tags;
+
+    Boolean isManager = false;
 
 
+
+    public ClubResponseDto(Club club, List<MemberDto> clubMembers, List<TagDto> tags, Boolean isManager) {
+        this.id = club.getId();
+        this.title = club.getTitle();
+        this.introduce = club.getIntroduce();
+        this.maximum = club.getMaximum();
+        this.activityDate = club.getActivityDate();
+        this.activityDays = club.getActivityDays();
+        this.activityFrequency = club.getActivityFrequency();
+        this.secret = club.getSecret();
+        this.isRecruitment = club.getIsRecruitment();
+        this.gender = club.getGender();
+        this.createdAt = club.getCreatedAt();
+        this.manager = MemberDto.from(club.getManager());
+        this.clubMembers = clubMembers;
+        this.tags = tags;
+        this.isManager = isManager;
+    }
 }

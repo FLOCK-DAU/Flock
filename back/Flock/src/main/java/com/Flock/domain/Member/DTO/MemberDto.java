@@ -1,6 +1,7 @@
 package com.Flock.domain.Member.DTO;
 
 
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import com.Flock.domain.Member.Entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,21 +27,23 @@ public class MemberDto {
 
     String role;
 
-    String gender;
+    Gender gender;
 
     Integer age_range;
 
     LocalDateTime createdAt;
 
 
-    public MemberDto(Long id,  String memberName, String mail, String role, Integer age_range) {
+    public MemberDto(Long id,  String memberName, String mail, Gender gender, String role, Integer age_range, LocalDateTime createdAt) {
         this.id = id;
 //        this.loginId = loginId;
 //        this.password = password;
         this.memberName = memberName;
         this.mail = mail;
+        this.gender = gender;
         this.role = role;
         this.age_range = age_range;
+        this.createdAt = createdAt;
     }
 
     public static MemberDto from(Member member){
@@ -51,10 +54,11 @@ public class MemberDto {
 //                member.getPhoneNumber(),
                 member.getMemberName(),
                 member.getMail(),
+                member.getGender(),
                 member.getRole().name(),
-                member.getAge_range()
+                member.getAge_range(),
 //                member.getGender().name(),
-//                member.getCreatedAt()
+                member.getCreatedAt()
         );
     }
 }

@@ -2,6 +2,7 @@ package com.Flock.domain.Club.Controller;
 
 import com.Flock.domain.Club.DTO.ClubListDto;
 import com.Flock.domain.Club.DTO.Request.ClubRequestDto;
+import com.Flock.domain.Club.DTO.Response.ClubResponseDto;
 import com.Flock.domain.Club.Service.ClubService;
 import com.Flock.domain.Member.Entity.MemberDetail;
 import com.Flock.domain.Response.CommonResponse;
@@ -76,10 +77,15 @@ public class ClubController {
     /**
      * Club 상세 조회
      */
-//    @GetMapping("/api/club")
-//    public SingleResponse getClubDetails(@RequestParam("clubId") Long clubId){
-//
-//    }
+    @GetMapping("/api/club")
+    public SingleResponse getClubDetails(@RequestParam("clubId") Long clubId, @AuthenticationPrincipal MemberDetail memberDetail){
+
+        Long memberId = memberDetail.getMember().getId();
+
+        ClubResponseDto clubResponseDto = clubService.getClub(clubId,memberId);
+
+        return responseService.getSingleResponse(clubResponseDto);
+    }
 
 
     /**

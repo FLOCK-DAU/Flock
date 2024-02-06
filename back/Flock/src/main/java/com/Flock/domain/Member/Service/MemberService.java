@@ -61,6 +61,7 @@ public class MemberService {
                 .role(Role.USER)
                 .gender(Gender.valueOf(signUpRequestDto.getGender()))
                 .birthday(signUpRequestDto.getBirthday())
+                .nickname(signUpRequestDto.getNickname())
                 .build();
 
         memberRepository.save(member);

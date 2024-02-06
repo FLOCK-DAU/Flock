@@ -33,10 +33,12 @@ public class MemberDto {
 
     LocalDate birthday;
 
+    String nickname;
+
     LocalDateTime createdAt;
 
 
-    public MemberDto(Long id, String memberName, String mail, Gender gender, String role, LocalDate birthday, LocalDateTime createdAt) {
+    public MemberDto(Long id, String memberName, String mail, Gender gender, String role, LocalDate birthday, String nickname, LocalDateTime createdAt) {
         this.id = id;
 //        this.loginId = loginId;
 //        this.password = password;
@@ -45,6 +47,7 @@ public class MemberDto {
         this.gender = gender;
         this.role = role;
         this.birthday = birthday;
+        this.nickname = nickname;
         this.createdAt = createdAt;
     }
 
@@ -59,6 +62,7 @@ public class MemberDto {
                 member.getGender(),
                 member.getRole().name(),
                 member.getBirthday(),
+                member.getNickname(),
 //                member.getGender().name(),
                 member.getCreatedAt()
         );

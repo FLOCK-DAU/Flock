@@ -36,7 +36,7 @@ public class Member {
 //    private String phoneNumber;
 
 
-    // 사용자명
+    // 사용자명 (카카오닉네임)
     private String memberName;
 
     private String mail;
@@ -48,6 +48,9 @@ public class Member {
     private Gender gender;
 
     private LocalDate birthday;
+
+    @Column(unique = true)
+    private String nickname;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

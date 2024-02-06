@@ -22,6 +22,7 @@ import com.Flock.domain.Tag.DTO.TagDto;
 import com.Flock.domain.Tag.Service.TagService;
 import com.Flock.global.Exception.CustomErrorCode;
 import com.Flock.global.Exception.CustomException;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -125,6 +126,7 @@ public class ClubService {
      * 클럽 리스트 조회 (카테고리 : 전체)
      * 검색 조건이 있을텐데 나중에 추가해주기
      */
+    @Operation(summary = "클럽 상세조회")
     public List<ClubListDto> getClubs(String title, String tag) {
 
         List<ClubListDto> clubs = new ArrayList<>();

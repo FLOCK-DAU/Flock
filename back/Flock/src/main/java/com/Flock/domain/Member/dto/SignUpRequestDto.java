@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class SignUpRequestDto {
 
     String gender;
 
-    Integer age_range;
+    LocalDate birthday;
 
 
 }

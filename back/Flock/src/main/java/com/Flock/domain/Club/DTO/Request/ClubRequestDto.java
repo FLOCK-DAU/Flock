@@ -1,5 +1,6 @@
 package com.Flock.domain.Club.DTO.Request;
 
+import com.Flock.domain.Member.Entity.Enum.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,8 +36,8 @@ public class ClubRequestDto {
     @Schema(description = "클럽 모집 하는 중 / 모집 안 함")
     Boolean isRecruitment;
 
-    @Schema(description = "클럽 성별 ( value : 남자, 여자, 혼성)", example = "남자")
-    String gender;
+    @Schema(description = "클럽 성별 ( value : MALE, FEMALE, MIXED)", example = "MALE")
+    Gender gender;
 
     @Schema(description = "클럽 카테고리 아이디")
     Integer categoryId;

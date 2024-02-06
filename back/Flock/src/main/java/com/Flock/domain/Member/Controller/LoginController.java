@@ -53,6 +53,7 @@ public class LoginController {
     @PostMapping("/api/sign-up")
     public CommonResponse signUp(@RequestBody SignUpRequestDto signUpRequestDto){
         CommonResponse response = memberService.signUp(signUpRequestDto);
+        response.setSuccessResponse("회원가입 성공");
         return response;
     }
 
@@ -80,12 +81,6 @@ public class LoginController {
 
 //        return responseService.getSingleResponse(tokenResponse);
     }
-
-
-
-
-
-
 
 
 

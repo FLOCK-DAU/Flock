@@ -60,7 +60,7 @@ public class MemberService {
                 .mail(signUpRequestDto.getMail())
                 .role(Role.USER)
                 .gender(Gender.valueOf(signUpRequestDto.getGender()))
-                .age_range(signUpRequestDto.getAge_range())
+                .birthday(signUpRequestDto.getBirthday())
                 .build();
 
         memberRepository.save(member);

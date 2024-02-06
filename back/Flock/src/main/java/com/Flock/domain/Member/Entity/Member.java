@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    private Integer age_range;
+    private LocalDate birthday;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

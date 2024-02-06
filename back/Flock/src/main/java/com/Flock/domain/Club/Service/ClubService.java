@@ -68,9 +68,9 @@ public class ClubService {
 
         List<DayOfWeek> dayOfWeeks = DayOfWeek.from(clubRequestDto.getActivityDays());
 
-        Gender gender = Gender.fromDescription(clubRequestDto.getGender());
+//        Gender gender = Gender.fromDescription(clubRequestDto.getGender());
 
-        if (!gender.equals(Gender.MIXED)) gender = member.get().getGender();
+//        if (!gender.equals(Gender.MIXED)) gender = member.get().getGender();
 
         Club club = Club.builder()
                 .title(clubRequestDto.getTitle())
@@ -81,7 +81,7 @@ public class ClubService {
                 .activityFrequency(clubRequestDto.getActivityFrequency())
                 .secret(clubRequestDto.getSecret())
                 .isRecruitment(true)
-                .gender(gender)
+                .gender(clubRequestDto.getGender())
                 .category(category)
                 .manager(member.get()).build();
 
